@@ -15,79 +15,154 @@
   --ink:#1A0A04;--ink2:#4A2A14;--ink3:#8A6040;--rule:#C8A870;
   --sans:'Syne',sans-serif;--serif:'Instrument Serif',serif;--mono:'Space Mono',monospace;
 }
-html,body{width:100%;min-height:100vh;background:var(--paper);color:var(--ink);font-family:var(--sans);overflow-x:hidden}
-body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.06;
+html,body{width:100%;min-height:100vh;background:var(--paper);color:var(--ink);font-family:var(--sans);overflow-x:hidden;-webkit-tap-highlight-color:transparent}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.05;
   background:repeating-linear-gradient(45deg,#8B6010 0,#8B6010 1px,transparent 0,transparent 50%);background-size:6px 6px}
-.header{background:var(--red);padding:0 24px;display:flex;align-items:center;gap:16px;height:56px;
-  border-bottom:3px solid var(--red2);position:sticky;top:0;z-index:100;box-shadow:0 4px 20px rgba(0,0,0,0.4)}
-.header-title{font-family:var(--serif);font-size:22px;color:#FFF5E8;font-style:italic}
-.header-sub{font-family:var(--mono);font-size:10px;color:rgba(255,245,232,0.5);letter-spacing:1.5px;text-transform:uppercase}
-.header-tabs{margin-left:auto;display:flex;gap:0;background:rgba(0,0,0,0.25);border-radius:8px;padding:3px}
-.tab{padding:7px 16px;font-family:var(--mono);font-size:11px;letter-spacing:.5px;color:rgba(255,245,232,0.5);cursor:pointer;border-radius:6px;transition:.2s;border:none;background:none}
+
+/* ── HEADER ── */
+.header{background:var(--red);padding:0 20px;display:flex;align-items:center;gap:14px;
+  height:56px;border-bottom:3px solid var(--red2);position:sticky;top:0;z-index:100;
+  box-shadow:0 4px 20px rgba(0,0,0,0.4)}
+.header-text{display:flex;flex-direction:column;gap:1px;min-width:0}
+.header-title{font-family:var(--serif);font-size:20px;color:#FFF5E8;font-style:italic;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.header-sub{font-family:var(--mono);font-size:9px;color:rgba(255,245,232,0.5);letter-spacing:1.5px;text-transform:uppercase}
+.header-tabs{margin-left:auto;display:flex;gap:0;background:rgba(0,0,0,0.25);border-radius:8px;padding:3px;flex-shrink:0}
+.tab{padding:6px 12px;font-family:var(--mono);font-size:10px;letter-spacing:.4px;color:rgba(255,245,232,0.5);
+  cursor:pointer;border-radius:6px;transition:.2s;border:none;background:none;white-space:nowrap}
 .tab.on{background:var(--paper);color:var(--ink);font-weight:700}
 .tab:hover:not(.on){color:rgba(255,245,232,0.85)}
-.main{max-width:900px;margin:0 auto;padding:20px 16px 60px;position:relative;z-index:1}
+
+/* ── LAYOUT ── */
+.main{max-width:540px;margin:0 auto;padding:16px 12px 60px;position:relative;z-index:1}
 .pnl{display:none}.pnl.on{display:block}
-.board{background:var(--paper2);border:3px solid var(--rule);border-radius:12px;padding:16px 20px;margin-bottom:16px;box-shadow:0 8px 32px rgba(0,0,0,0.15)}
-.board-title{font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--ink3);margin-bottom:12px}
+.board{background:var(--paper2);border:2.5px solid var(--rule);border-radius:14px;
+  padding:16px;margin-bottom:14px;box-shadow:0 6px 24px rgba(0,0,0,0.12)}
+.board-title{font-family:var(--mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;
+  color:var(--ink3);margin-bottom:14px}
 
-/* CLOCK */
-.clock-wrap{display:flex;justify-content:center;margin-bottom:16px}
-#clock-canvas{display:block;cursor:grab;border-radius:50%;box-shadow:0 6px 24px rgba(0,0,0,0.25);touch-action:none}
+/* ── CLOCK SECTION ── */
+/* Canvas sits alone — no absolute children inside its wrapper */
+.clock-canvas-wrap{display:flex;justify-content:center;margin-bottom:14px}
+#clock-canvas{display:block;border-radius:50%;
+  box-shadow:0 6px 28px rgba(0,0,0,0.22),0 2px 8px rgba(0,0,0,0.12);
+  touch-action:none;cursor:crosshair;
+  /* responsive: max 280px but shrinks on small screens */
+  width:min(280px,calc(100vw - 80px));
+  height:min(280px,calc(100vw - 80px));
+}
 
-/* CHALLENGE CARDS */
-.challenge-card{background:var(--paper);border:2px solid var(--rule);border-radius:10px;padding:16px 20px;margin-bottom:12px}
+/* Hand-select row — completely separate from canvas */
+.hand-select{display:flex;gap:10px;justify-content:center;margin-bottom:10px}
+.hand-btn{
+  display:flex;align-items:center;gap:7px;
+  padding:9px 20px;border-radius:30px;
+  font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.4px;
+  border:2.5px solid transparent;cursor:pointer;transition:.18s;
+  user-select:none;-webkit-user-select:none;
+}
+.hand-btn-hour{
+  background:rgba(26,10,4,0.07);border-color:rgba(26,10,4,0.2);color:var(--ink2);
+}
+.hand-btn-min{
+  background:rgba(139,26,26,0.07);border-color:rgba(139,26,26,0.2);color:var(--red);
+}
+.hand-btn.active.hand-btn-hour{
+  background:var(--ink);border-color:var(--ink);color:#FFF5E8;
+}
+.hand-btn.active.hand-btn-min{
+  background:var(--red);border-color:var(--red2);color:#fff;
+}
+.hand-btn-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.hand-btn-hour .hand-btn-dot{background:var(--ink)}
+.hand-btn-hour.active .hand-btn-dot{background:#FFF5E8}
+.hand-btn-min .hand-btn-dot{background:var(--red)}
+.hand-btn-min.active .hand-btn-dot{background:#fff}
+
+/* Time display */
+.time-display-row{display:flex;align-items:baseline;justify-content:center;gap:10px;margin-bottom:2px}
+.time-digits{font-family:var(--mono);font-size:clamp(32px,8vw,44px);font-weight:700;color:var(--ink);line-height:1}
+.time-ampm-badge{font-family:var(--mono);font-size:15px;font-weight:700;color:var(--ink3)}
+
+/* AM/PM toggle */
+.ampm-row{display:flex;gap:8px;justify-content:center;margin-top:10px}
+.ampm-btn{
+  padding:8px 26px;font-family:var(--mono);font-size:13px;font-weight:700;
+  border-radius:8px;cursor:pointer;transition:.15s;
+  border:2px solid var(--rule);background:var(--paper3);color:var(--ink2);
+}
+.ampm-btn.on{border-color:var(--red);background:var(--red);color:#fff;}
+
+/* ── CHALLENGE ── */
+.challenge-card{background:var(--paper);border:2px solid var(--rule);border-radius:10px;padding:14px 16px}
 .challenge-tag{font-family:var(--mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--ink3);margin-bottom:6px}
-.challenge-q{font-family:var(--serif);font-style:italic;font-size:18px;color:var(--ink);margin-bottom:14px;line-height:1.5}
-.challenge-hint{font-family:var(--mono);font-size:12px;color:var(--ink3);margin-bottom:10px}
-.check-btn{padding:10px 22px;background:var(--red);color:#fff;border:none;border-radius:8px;font-family:var(--mono);font-size:12px;font-weight:700;cursor:pointer;transition:.15s}
+.challenge-q{font-family:var(--serif);font-style:italic;font-size:clamp(16px,4.5vw,20px);
+  color:var(--ink);margin-bottom:10px;line-height:1.5}
+.challenge-target{font-style:normal;font-family:var(--mono);font-size:clamp(18px,5vw,24px);color:var(--red);font-weight:700}
+.challenge-hint{font-family:var(--mono);font-size:11px;color:var(--ink3);margin-bottom:12px;line-height:1.6}
+.btn-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.check-btn{flex:1;min-width:120px;padding:11px 18px;background:var(--red);color:#fff;border:none;
+  border-radius:8px;font-family:var(--mono);font-size:12px;font-weight:700;cursor:pointer;transition:.15s;text-align:center}
 .check-btn:hover{background:var(--red2)}
-.challenge-result{margin-top:10px;font-family:var(--serif);font-style:italic;font-size:15px;min-height:22px}
+.skip-btn{padding:11px 16px;background:var(--paper3);border:2px solid var(--rule);border-radius:8px;
+  font-family:var(--mono);font-size:11px;font-weight:700;cursor:pointer;color:var(--ink2)}
+.challenge-result{margin-top:10px;font-family:var(--serif);font-style:italic;font-size:14px;min-height:20px;line-height:1.5}
 .challenge-result.ok{color:var(--green)}.challenge-result.no{color:var(--red-med)}
-.skip-btn{padding:8px 16px;background:var(--paper3);border:2px solid var(--rule);border-radius:8px;font-family:var(--mono);font-size:11px;font-weight:700;cursor:pointer;color:var(--ink2);margin-left:8px}
 
-/* DURATION */
-.dur-area{background:var(--paper2);border:2px solid var(--rule);border-radius:12px;padding:16px;margin-bottom:16px}
-.dur-q{font-family:var(--serif);font-style:italic;font-size:16px;color:var(--ink);margin-bottom:14px;line-height:1.6}
-.timeline-bar{height:48px;background:var(--paper3);border-radius:8px;position:relative;margin-bottom:12px;overflow:visible}
-.tl-marker{position:absolute;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;align-items:center;gap:2px;transition:left .4s cubic-bezier(.36,1.1,.6,1)}
-.tl-dot{width:14px;height:14px;border-radius:50%;border:2px solid rgba(255,255,255,0.5)}
-.tl-label{font-family:var(--mono);font-size:10px;font-weight:700;white-space:nowrap;margin-top:14px}
-.dur-slider{width:100%;accent-color:var(--red);margin:8px 0}
-.dur-readout{font-family:var(--mono);font-size:22px;font-weight:700;color:var(--red);margin-bottom:10px}
-.dur-result{font-family:var(--serif);font-style:italic;font-size:14px;min-height:22px}
+/* ── DURATION ── */
+.dur-area{background:var(--paper2);border:2px solid var(--rule);border-radius:12px;padding:16px;margin-bottom:14px}
+.dur-q{font-family:var(--serif);font-style:italic;font-size:clamp(14px,4vw,16px);
+  color:var(--ink);margin-bottom:14px;line-height:1.65}
+.timeline-bar{height:44px;background:var(--paper3);border-radius:8px;position:relative;
+  margin-bottom:32px;overflow:visible}
+.tl-marker{position:absolute;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;align-items:center;gap:2px;
+  transition:left .35s cubic-bezier(.36,1.1,.6,1)}
+.tl-dot{width:13px;height:13px;border-radius:50%;border:2px solid rgba(255,255,255,0.5)}
+.tl-label{font-family:var(--mono);font-size:9px;font-weight:700;white-space:nowrap;margin-top:13px;color:var(--ink2)}
+.dur-slider{width:100%;accent-color:var(--red);margin:4px 0 10px;height:24px;cursor:pointer}
+.dur-readout{font-family:var(--mono);font-size:clamp(20px,6vw,26px);font-weight:700;color:var(--red);margin-bottom:12px;text-align:center}
+.dur-result{font-family:var(--serif);font-style:italic;font-size:14px;min-height:20px;margin-top:6px;line-height:1.5}
 .dur-result.ok{color:var(--green)}.dur-result.no{color:var(--red-med)}
 
-/* PRACTICE */
-.practice-card{background:var(--paper);border:2px solid var(--rule);border-radius:12px;padding:20px;margin-bottom:16px;box-shadow:0 4px 16px rgba(0,0,0,0.1)}
-.practice-q{font-family:var(--serif);font-style:italic;font-size:17px;color:var(--ink);margin-bottom:14px;line-height:1.6}
-.ans-opts{display:flex;gap:8px;flex-wrap:wrap}
-.ans-opt{padding:10px 18px;background:var(--paper2);border:2px solid var(--rule);border-radius:8px;font-family:var(--mono);font-size:14px;font-weight:700;cursor:pointer;transition:.2s;color:var(--ink)}
+/* ── PRACTICE ── */
+.practice-card{background:var(--paper);border:2px solid var(--rule);border-radius:12px;padding:18px;
+  margin-bottom:14px;box-shadow:0 4px 16px rgba(0,0,0,0.09)}
+.practice-q{font-family:var(--serif);font-style:italic;font-size:clamp(15px,4.2vw,18px);
+  color:var(--ink);margin-bottom:14px;line-height:1.65}
+.ans-opts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.ans-opt{padding:12px 10px;background:var(--paper2);border:2px solid var(--rule);border-radius:8px;
+  font-family:var(--mono);font-size:13px;font-weight:700;cursor:pointer;transition:.2s;color:var(--ink);text-align:center}
 .ans-opt:hover{border-color:var(--red);background:var(--red-light)}
 .ans-opt.correct{background:var(--green-light);border-color:var(--green);color:#14532D;animation:cpop .35s}
 .ans-opt.wrong{background:#FEE2E2;border-color:var(--red-med);color:#7F1D1D;animation:cshk .35s}
 @keyframes cpop{0%{transform:scale(1)}50%{transform:scale(1.06)}100%{transform:scale(1)}}
 @keyframes cshk{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
-.pq-fb{min-height:24px;margin-top:12px;font-family:var(--serif);font-style:italic;font-size:14px}
+.pq-fb{min-height:22px;margin-top:12px;font-family:var(--serif);font-style:italic;font-size:14px;line-height:1.5}
 .pq-fb.ok{color:var(--green)}.pq-fb.no{color:var(--red-med)}
-.next-btn{margin-top:14px;background:var(--red);color:#fff;border:none;border-radius:8px;padding:10px 24px;font-family:var(--mono);font-size:12px;font-weight:700;cursor:pointer}
+.next-btn{margin-top:14px;width:100%;background:var(--red);color:#fff;border:none;border-radius:8px;
+  padding:12px;font-family:var(--mono);font-size:12px;font-weight:700;cursor:pointer;letter-spacing:.3px}
 .next-btn:hover{background:var(--red2)}
-.ampm-row{display:flex;gap:8px;justify-content:center;margin-top:10px}
-.ampm-btn{padding:8px 22px;font-family:var(--mono);font-size:13px;font-weight:700;border-radius:8px;cursor:pointer;transition:.15s;border:2px solid var(--rule);background:var(--paper2);color:var(--ink2)}
-.ampm-btn.on{border-color:var(--red);background:var(--red-light);color:var(--red2)}
-.time-display{font-family:var(--mono);font-size:36px;font-weight:700;color:var(--ink);text-align:center;margin-top:8px}
+
+@media(max-width:380px){
+  .header-title{font-size:17px}
+  .tab{padding:5px 9px;font-size:9px}
+  .hand-btn{padding:8px 14px;font-size:11px}
+  .ampm-btn{padding:7px 18px;font-size:12px}
+  .ans-opts{grid-template-columns:1fr}
+}
 </style>
 </head>
 <body>
+
+<!-- HEADER -->
 <div class="header">
-  <svg width="36" height="36" viewBox="0 0 36 36" style="flex-shrink:0">
-    <circle cx="18" cy="18" r="14" fill="none" stroke="#FFF5E8" stroke-width="2"/>
+  <svg width="32" height="32" viewBox="0 0 36 36" style="flex-shrink:0">
+    <circle cx="18" cy="18" r="14" fill="none" stroke="#FFF5E8" stroke-width="2.5"/>
     <line x1="18" y1="10" x2="18" y2="18" stroke="#FFF5E8" stroke-width="2.5" stroke-linecap="round"/>
     <line x1="18" y1="18" x2="24" y2="21" stroke="#FFF5E8" stroke-width="2" stroke-linecap="round"/>
-    <circle cx="18" cy="18" r="2" fill="#FFF5E8"/>
+    <circle cx="18" cy="18" r="2.5" fill="#FFF5E8"/>
   </svg>
-  <div>
-    <div class="header-title">Time Detective Agency</div>
+  <div class="header-text">
+    <div class="header-title">Time Detective</div>
     <div class="header-sub">Chapter 13 · Time</div>
   </div>
   <div class="header-tabs">
@@ -96,42 +171,68 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opa
     <button class="tab" onclick="switchTab('practice')">Practice</button>
   </div>
 </div>
+
 <div class="main">
 
-<!-- CLOCK TAB -->
+<!-- ══ CLOCK TAB ══ -->
 <div class="pnl on" id="pnl-clock">
+
   <div class="board">
-    <div class="board-title">Drag the hands to set the time — then match the challenge!</div>
-    <div class="clock-wrap">
-      <canvas id="clock-canvas" width="260" height="260"></canvas>
+    <div class="board-title">Set the hands — then check your answer</div>
+
+    <!-- 1. Canvas alone in its wrapper -->
+    <div class="clock-canvas-wrap">
+      <canvas id="clock-canvas"></canvas>
     </div>
-    <div class="time-display" id="clock-display">12:00 <span id="clock-ampm" style="font-size:18px;color:var(--ink3)">PM</span></div>
+
+    <!-- 2. Hand-select row: clearly below the clock -->
+    <div class="hand-select">
+      <button class="hand-btn hand-btn-hour active" id="btn-hour" onclick="setDragMode('hour')">
+        <span class="hand-btn-dot"></span>HOUR
+      </button>
+      <button class="hand-btn hand-btn-min" id="btn-min" onclick="setDragMode('minute')">
+        <span class="hand-btn-dot"></span>MINUTE
+      </button>
+    </div>
+
+    <!-- 3. Time readout -->
+    <div class="time-display-row">
+      <div class="time-digits" id="clock-digits">12:00</div>
+      <div class="time-ampm-badge" id="clock-ampm-badge">PM</div>
+    </div>
+
+    <!-- 4. AM/PM -->
     <div class="ampm-row">
       <button class="ampm-btn" id="am-btn" onclick="setAmPm('AM')">AM</button>
       <button class="ampm-btn on" id="pm-btn" onclick="setAmPm('PM')">PM</button>
     </div>
   </div>
 
+  <!-- Challenge card -->
   <div class="board" style="background:var(--amber-light);border-color:var(--amber)">
-    <div class="board-title" style="color:var(--amber)">Challenge</div>
-    <div class="challenge-card" id="challenge-card">
-      <div class="challenge-tag">Time challenge</div>
-      <div class="challenge-q" id="ch-q">Set the clock to show <strong id="ch-target">3:45 PM</strong></div>
-      <div class="challenge-hint" id="ch-hint">Drag the short dark hand to the hour, long red hand to the minutes.</div>
-      <div>
-        <button class="check-btn" onclick="checkChallenge()">Check my answer</button>
-        <button class="skip-btn" onclick="newChallenge()">Skip</button>
+    <div class="board-title" style="color:var(--amber)">Challenge — match the time shown</div>
+    <div class="challenge-card">
+      <div class="challenge-tag">Set the clock to</div>
+      <div class="challenge-q"><span class="challenge-target" id="ch-target">3:45 PM</span></div>
+      <div class="challenge-hint">
+        Tap <strong>HOUR</strong> or <strong>MINUTE</strong> above, then drag on the clock face.
+        Set AM / PM with the buttons below the clock.
+      </div>
+      <div class="btn-row">
+        <button class="check-btn" onclick="checkChallenge()">✓ Check answer</button>
+        <button class="skip-btn" onclick="newChallenge()">Skip →</button>
       </div>
       <div class="challenge-result" id="ch-result"></div>
     </div>
   </div>
-</div>
 
-<!-- DURATION TAB -->
+</div><!-- /clock tab -->
+
+<!-- ══ DURATION TAB ══ -->
 <div class="pnl" id="pnl-duration">
-  <div class="dur-area" id="dur-area">
-    <div class="dur-q" id="dur-q">Loading...</div>
-    <div class="timeline-bar" id="tl-bar">
+  <div class="dur-area">
+    <div class="dur-q" id="dur-q">Loading…</div>
+    <div class="timeline-bar">
       <div class="tl-marker" id="tl-start" style="left:4%">
         <div class="tl-dot" style="background:var(--green)"></div>
         <div class="tl-label" id="tl-start-lbl" style="color:var(--green)">Start</div>
@@ -143,178 +244,215 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opa
     </div>
     <input type="range" class="dur-slider" id="dur-slider" min="0" max="1440" value="720" step="5"/>
     <div class="dur-readout" id="dur-readout">12:00 PM</div>
-    <button class="check-btn" onclick="checkDuration()">Check answer</button>
-    <button class="skip-btn" onclick="newDurQ()">Next problem</button>
+    <div class="btn-row">
+      <button class="check-btn" onclick="checkDuration()">✓ Check answer</button>
+      <button class="skip-btn" onclick="newDurQ()">Next →</button>
+    </div>
     <div class="dur-result" id="dur-result"></div>
   </div>
 </div>
 
-<!-- PRACTICE -->
+<!-- ══ PRACTICE TAB ══ -->
 <div class="pnl" id="pnl-practice">
   <div class="practice-card">
-    <div class="practice-q" id="pq-text">Loading...</div>
+    <div class="practice-q" id="pq-text">Loading…</div>
     <div class="ans-opts" id="pq-opts"></div>
     <div class="pq-fb" id="pq-fb"></div>
-    <button class="next-btn" onclick="nextPQ()">Next question</button>
+    <button class="next-btn" onclick="nextPQ()">Next question →</button>
   </div>
 </div>
 
-</div>
+</div><!-- /main -->
+
 <script>
-// ============ CLOCK ============
-const CW=260,CH=260,CCX=130,CCY=130,CR=118;
-let clockH=12,clockM=0,clockAP='PM',dragging=null;
-const clockCvs=document.getElementById('clock-canvas');
-const clockCtx=clockCvs.getContext('2d');
+// ══════════════════════════════════════════════════════
+//  CLOCK ENGINE
+// ══════════════════════════════════════════════════════
+const cvs = document.getElementById('clock-canvas');
+const ctx = cvs.getContext('2d');
 
-function getAngles(){
-  return{
-    ha:(clockH%12+clockM/60)*(Math.PI*2/12)-Math.PI/2,
-    ma:clockM*(Math.PI*2/60)-Math.PI/2
-  };
+// Make canvas pixels match its CSS size (HiDPI aware)
+function sizeClock(){
+  const PR = Math.min(window.devicePixelRatio||1, 2);
+  const el = cvs.getBoundingClientRect();
+  const sz = Math.round(el.width);         // CSS width (already clamped by CSS)
+  cvs.width  = sz * PR;
+  cvs.height = sz * PR;
+  ctx.setTransform(PR, 0, 0, PR, 0, 0);   // draw in CSS px units
+  RADIUS = sz / 2;
+  CX = CY = RADIUS;
+  draw();
 }
 
-function drawClock(){
-  clockCtx.clearRect(0,0,CW,CH);
-  // Face
-  clockCtx.fillStyle='#F5EDD8';clockCtx.beginPath();clockCtx.arc(CCX,CCY,CR,0,Math.PI*2);clockCtx.fill();
-  clockCtx.strokeStyle='#8B6010';clockCtx.lineWidth=6;clockCtx.stroke();
-  // Inner ring
-  clockCtx.strokeStyle='rgba(139,96,16,0.15)';clockCtx.lineWidth=2;
-  clockCtx.beginPath();clockCtx.arc(CCX,CCY,CR-10,0,Math.PI*2);clockCtx.stroke();
-  // Ticks
+let CX=140, CY=140, RADIUS=140;
+let clockH=12, clockM=0, clockAP='PM';
+let dragMode='hour', isDragging=false;
+
+function setDragMode(m){
+  dragMode=m;
+  document.getElementById('btn-hour').classList.toggle('active', m==='hour');
+  document.getElementById('btn-min').classList.toggle('active', m==='minute');
+  draw();
+}
+
+function angleOf(h24, m){
+  return { ha:(h24%12 + m/60)*(Math.PI*2/12)-Math.PI/2, ma:m*(Math.PI*2/60)-Math.PI/2 };
+}
+
+function draw(){
+  const sz = RADIUS*2;
+  ctx.clearRect(0,0,sz,sz);
+
+  // ── Face ──
+  ctx.save();
+  ctx.beginPath(); ctx.arc(CX,CY,RADIUS,0,Math.PI*2);
+  const grad = ctx.createRadialGradient(CX,CY,RADIUS*0.3,CX,CY,RADIUS);
+  grad.addColorStop(0,'#FAF0D8'); grad.addColorStop(1,'#EDD8A8');
+  ctx.fillStyle=grad; ctx.fill();
+  ctx.restore();
+
+  // outer bezel
+  ctx.beginPath(); ctx.arc(CX,CY,RADIUS-1,0,Math.PI*2);
+  ctx.strokeStyle='#8B6010'; ctx.lineWidth=6; ctx.stroke();
+  // inner rim
+  ctx.beginPath(); ctx.arc(CX,CY,RADIUS-10,0,Math.PI*2);
+  ctx.strokeStyle='rgba(139,96,16,0.12)'; ctx.lineWidth=1.5; ctx.stroke();
+
+  // ── Ticks ──
   for(let i=0;i<60;i++){
-    const a=i*(Math.PI*2/60)-Math.PI/2,ih=i%5===0;
-    clockCtx.strokeStyle=ih?'#2A1E0A':'rgba(42,30,10,0.25)';
-    clockCtx.lineWidth=ih?3:1;
-    clockCtx.beginPath();
-    clockCtx.moveTo(CCX+Math.cos(a)*(CR-3),CCY+Math.sin(a)*(CR-3));
-    clockCtx.lineTo(CCX+Math.cos(a)*(ih?CR-20:CR-11),CCY+Math.sin(a)*(ih?CR-20:CR-11));
-    clockCtx.stroke();
+    const a=i*(Math.PI*2/60)-Math.PI/2, maj=i%5===0;
+    const r0=RADIUS-(maj?4:2), r1=RADIUS-(maj?22:12);
+    ctx.strokeStyle=maj?'#2A1E0A':'rgba(42,30,10,0.22)';
+    ctx.lineWidth=maj?2.5:1;
+    ctx.beginPath();
+    ctx.moveTo(CX+Math.cos(a)*r0, CY+Math.sin(a)*r0);
+    ctx.lineTo(CX+Math.cos(a)*r1, CY+Math.sin(a)*r1);
+    ctx.stroke();
   }
-  // Numbers
-  clockCtx.fillStyle='#2A1E0A';clockCtx.font='bold 15px "Space Mono",monospace';
-  clockCtx.textAlign='center';clockCtx.textBaseline='middle';
+
+  // ── Numbers ──
+  ctx.fillStyle='#2A1E0A'; ctx.textAlign='center'; ctx.textBaseline='middle';
+  const fs=Math.max(11,Math.round(RADIUS*0.115));
+  ctx.font=`700 ${fs}px "Space Mono",monospace`;
   [12,1,2,3,4,5,6,7,8,9,10,11].forEach((n,i)=>{
-    const a=i*(Math.PI*2/12)-Math.PI/2;
-    clockCtx.fillText(n,CCX+Math.cos(a)*(CR-33),CCY+Math.sin(a)*(CR-33));
+    const a=i*(Math.PI*2/12)-Math.PI/2, r=RADIUS-37;
+    ctx.fillText(n, CX+Math.cos(a)*r, CY+Math.sin(a)*r);
   });
-  const {ha,ma}=getAngles();
-  // Hour shadow
-  clockCtx.strokeStyle='rgba(0,0,0,0.1)';clockCtx.lineWidth=12;clockCtx.lineCap='round';
-  clockCtx.beginPath();clockCtx.moveTo(CCX-Math.cos(ha)*16+1,CCY-Math.sin(ha)*16+1);
-  clockCtx.lineTo(CCX+Math.cos(ha)*68+1,CCY+Math.sin(ha)*68+1);clockCtx.stroke();
-  // Hour hand
-  clockCtx.strokeStyle='#1A0A04';clockCtx.lineWidth=9;
-  clockCtx.beginPath();clockCtx.moveTo(CCX-Math.cos(ha)*16,CCY-Math.sin(ha)*16);
-  clockCtx.lineTo(CCX+Math.cos(ha)*68,CCY+Math.sin(ha)*68);clockCtx.stroke();
-  // Minute shadow
-  clockCtx.strokeStyle='rgba(0,0,0,0.08)';clockCtx.lineWidth=7;
-  clockCtx.beginPath();clockCtx.moveTo(CCX-Math.cos(ma)*20+1,CCY-Math.sin(ma)*20+1);
-  clockCtx.lineTo(CCX+Math.cos(ma)*96+1,CCY+Math.sin(ma)*96+1);clockCtx.stroke();
-  // Minute hand
-  clockCtx.strokeStyle='#8B1A1A';clockCtx.lineWidth=5;
-  clockCtx.beginPath();clockCtx.moveTo(CCX-Math.cos(ma)*20,CCY-Math.sin(ma)*20);
-  clockCtx.lineTo(CCX+Math.cos(ma)*96,CCY+Math.sin(ma)*96);clockCtx.stroke();
-  // Tip circles
-  [{a:ha,len:68,c:'#1A0A04'},{a:ma,len:96,c:'#8B1A1A'}].forEach(({a,len,c})=>{
-    const tx=CCX+Math.cos(a)*len,ty=CCY+Math.sin(a)*len;
-    clockCtx.fillStyle=c;clockCtx.beginPath();clockCtx.arc(tx,ty,8,0,Math.PI*2);clockCtx.fill();
-    clockCtx.strokeStyle='rgba(255,255,255,0.55)';clockCtx.lineWidth=2;clockCtx.stroke();
-  });
-  // Centre pin
-  clockCtx.fillStyle='#2A1E0A';clockCtx.beginPath();clockCtx.arc(CCX,CCY,9,0,Math.PI*2);clockCtx.fill();
-  clockCtx.fillStyle='#C8A060';clockCtx.beginPath();clockCtx.arc(CCX,CCY,4,0,Math.PI*2);clockCtx.fill();
-  // Update display
-  updateDisplay();
+
+  const {ha,ma}=angleOf(clockH,clockM);
+  const hLen=RADIUS*0.52, mLen=RADIUS*0.73;
+
+  // ── Draw hands: inactive first (below), active on top ──
+  function drawHand(angle,len,thick,col,back=false){
+    const tailLen=len*0.22;
+    const tipX=CX+Math.cos(angle)*len, tipY=CY+Math.sin(angle)*len;
+    const tailX=CX-Math.cos(angle)*tailLen, tailY=CY-Math.sin(angle)*tailLen;
+    // shadow
+    ctx.save(); ctx.shadowColor='rgba(0,0,0,0.18)'; ctx.shadowBlur=back?0:6; ctx.shadowOffsetY=back?0:2;
+    ctx.strokeStyle=col; ctx.lineWidth=thick; ctx.lineCap='round';
+    ctx.beginPath(); ctx.moveTo(tailX,tailY); ctx.lineTo(tipX,tipY); ctx.stroke();
+    ctx.restore();
+    // tip circle
+    ctx.beginPath(); ctx.arc(tipX,tipY,thick*0.9,0,Math.PI*2);
+    ctx.fillStyle=col; ctx.fill();
+    ctx.strokeStyle='rgba(255,255,255,0.5)'; ctx.lineWidth=1.5; ctx.stroke();
+  }
+
+  const hourActive=dragMode==='hour', minActive=dragMode==='minute';
+  const hourCol=hourActive?'#1A0A04':'rgba(26,10,4,0.35)';
+  const minCol =minActive ?'#8B1A1A':'rgba(139,26,26,0.35)';
+  const hourW=hourActive?Math.round(RADIUS*0.072):Math.round(RADIUS*0.055);
+  const minW =minActive ?Math.round(RADIUS*0.052):Math.round(RADIUS*0.038);
+
+  // draw inactive first, then active on top
+  if(hourActive){ drawHand(ma,mLen,minW,minCol); drawHand(ha,hLen,hourW,hourCol); }
+  else          { drawHand(ha,hLen,hourW,hourCol); drawHand(ma,mLen,minW,minCol); }
+
+  // glow ring on active tip
+  const {angle:ga,len:gl}=hourActive?{angle:ha,len:hLen}:{angle:ma,len:mLen};
+  const gx=CX+Math.cos(ga)*gl, gy=CY+Math.sin(ga)*gl;
+  ctx.beginPath(); ctx.arc(gx,gy,Math.round(RADIUS*0.12),0,Math.PI*2);
+  ctx.strokeStyle=hourActive?'rgba(26,10,4,0.3)':'rgba(139,26,26,0.35)';
+  ctx.lineWidth=2; ctx.setLineDash([3,3]); ctx.stroke(); ctx.setLineDash([]);
+
+  // ── Centre pin ──
+  ctx.beginPath(); ctx.arc(CX,CY,Math.round(RADIUS*0.065),0,Math.PI*2);
+  ctx.fillStyle='#2A1E0A'; ctx.fill();
+  ctx.beginPath(); ctx.arc(CX,CY,Math.round(RADIUS*0.03),0,Math.PI*2);
+  ctx.fillStyle='#C8A060'; ctx.fill();
+
+  updateDigits();
 }
 
-function updateDisplay(){
-  const hh=clockH===0?12:clockH>12?clockH-12:clockH;
-  document.getElementById('clock-display').textContent=hh+':'+String(clockM).padStart(2,'0');
-  document.getElementById('clock-ampm').textContent=clockAP;
+function updateDigits(){
+  const hd=clockH===0?12:clockH>12?clockH-12:clockH;
+  document.getElementById('clock-digits').textContent=hd+':'+String(clockM).padStart(2,'0');
+  document.getElementById('clock-ampm-badge').textContent=clockAP;
 }
 
-function distToSeg(px,py,ax,ay,bx,by){
-  const dx=bx-ax,dy=by-ay,len2=dx*dx+dy*dy;
-  if(len2===0)return Math.hypot(px-ax,py-ay);
-  const t=Math.max(0,Math.min(1,((px-ax)*dx+(py-ay)*dy)/len2));
-  return Math.hypot(px-ax-t*dx,py-ay-t*dy);
-}
-
+// ── Drag ──
 function getCP(e){
-  const r=clockCvs.getBoundingClientRect();
-  const sx=CW/r.width,sy=CH/r.height;
+  const r=cvs.getBoundingClientRect();
+  const PR=Math.min(window.devicePixelRatio||1,2);
   const s=e.touches?e.touches[0]:e;
-  return{x:(s.clientX-r.left)*sx,y:(s.clientY-r.top)*sy};
+  // convert to CSS-px coordinates used for drawing
+  return{ x:(s.clientX-r.left), y:(s.clientY-r.top) };
 }
 
-function startDrag(e){
+function applyDrag(e){
+  if(!isDragging)return;
   e.preventDefault();
   const p=getCP(e);
-  const {ha,ma}=getAngles();
-  const md=distToSeg(p.x,p.y,CCX-Math.cos(ma)*20,CCY-Math.sin(ma)*20,CCX+Math.cos(ma)*96,CCY+Math.sin(ma)*96);
-  const hd=distToSeg(p.x,p.y,CCX-Math.cos(ha)*16,CCY-Math.sin(ha)*16,CCX+Math.cos(ha)*68,CCY+Math.sin(ha)*68);
-  dragging=md<22?'minute':hd<22?'hour':null;
-  if(dragging)clockCvs.style.cursor='grabbing';
-}
-function doDrag(e){
-  if(!dragging)return;
-  e.preventDefault();
-  const p=getCP(e);
-  const norm=(((Math.atan2(p.y-CCY,p.x-CCX)+Math.PI/2)%(Math.PI*2))+(Math.PI*2))%(Math.PI*2);
-  if(dragging==='minute'){
-    clockM=Math.round(norm/(Math.PI*2)*60)%60;
+  const raw=Math.atan2(p.y-CY, p.x-CX);
+  const norm=((raw+Math.PI/2)%(Math.PI*2)+(Math.PI*2))%(Math.PI*2);
+  if(dragMode==='minute'){
+    const rawM=norm/(Math.PI*2)*60;
+    clockM=Math.round(rawM/5)*5 % 60;
   } else {
-    const h12=Math.floor(norm/(Math.PI*2)*12)%12;
+    const rawH=norm/(Math.PI*2)*12;
+    const h12=Math.round(rawH)%12;
     clockH=clockAP==='PM'?(h12===0?12:h12+12):(h12===0?0:h12);
   }
-  drawClock();
+  draw();
 }
-function stopDrag(){dragging=null;clockCvs.style.cursor='grab';}
 
-clockCvs.addEventListener('mousedown',startDrag);
-window.addEventListener('mousemove',e=>{if(dragging)doDrag(e)});
-window.addEventListener('mouseup',stopDrag);
-clockCvs.addEventListener('touchstart',startDrag,{passive:false});
-window.addEventListener('touchmove',e=>{if(dragging)doDrag(e)},{passive:false});
-window.addEventListener('touchend',stopDrag);
+cvs.addEventListener('mousedown', e=>{ isDragging=true; applyDrag(e); });
+window.addEventListener('mousemove', e=>{ if(isDragging)applyDrag(e); });
+window.addEventListener('mouseup', ()=>isDragging=false);
+cvs.addEventListener('touchstart', e=>{ isDragging=true; applyDrag(e); },{passive:false});
+window.addEventListener('touchmove', e=>{ if(isDragging)applyDrag(e); },{passive:false});
+window.addEventListener('touchend', ()=>isDragging=false);
 
 function setAmPm(ap){
   clockAP=ap;
-  if(ap==='AM'&&clockH>=12)clockH-=12;
-  if(ap==='PM'&&clockH<12)clockH+=12;
+  if(ap==='AM'&&clockH>=12) clockH-=12;
+  if(ap==='PM'&&clockH<12)  clockH+=12;
   document.getElementById('am-btn').classList.toggle('on',ap==='AM');
   document.getElementById('pm-btn').classList.toggle('on',ap==='PM');
-  drawClock();
+  draw();
 }
 
-function setClockTo(h,m,ap){
-  clockAP=ap;
-  clockH=ap==='PM'&&h!==12?h+12:ap==='AM'&&h===12?0:h;
-  clockM=m;
-  document.getElementById('am-btn').classList.toggle('on',ap==='AM');
-  document.getElementById('pm-btn').classList.toggle('on',ap==='PM');
-  drawClock();
-}
-
-// ============ CHALLENGES ============
+// ══════════════════════════════════════════════════════
+//  CHALLENGES
+// ══════════════════════════════════════════════════════
 const CHALLENGES=[
   {h:3,m:45,ap:'PM'},{h:7,m:30,ap:'AM'},{h:12,m:0,ap:'PM'},{h:9,m:15,ap:'AM'},
   {h:6,m:0,ap:'PM'},{h:2,m:50,ap:'PM'},{h:11,m:30,ap:'AM'},{h:4,m:20,ap:'PM'},
   {h:8,m:0,ap:'AM'},{h:1,m:15,ap:'PM'},{h:10,m:45,ap:'AM'},{h:5,m:30,ap:'PM'},
 ];
-let curChallenge=null;
+let curChallenge=null, chalUsed=[];
 
-function fmtTime12(h,m,ap){
+function fmt12(h,m,ap){
   const hd=h===0?12:h>12?h-12:h;
   return hd+':'+String(m).padStart(2,'0')+' '+ap;
 }
 
 function newChallenge(){
-  const c=CHALLENGES[Math.floor(Math.random()*CHALLENGES.length)];
-  curChallenge=c;
-  document.getElementById('ch-target').textContent=fmtTime12(c.h,c.m,c.ap);
+  if(chalUsed.length>=CHALLENGES.length) chalUsed=[];
+  let idx; do{ idx=Math.floor(Math.random()*CHALLENGES.length); }while(chalUsed.includes(idx));
+  chalUsed.push(idx);
+  curChallenge=CHALLENGES[idx];
+  document.getElementById('ch-target').textContent=fmt12(curChallenge.h,curChallenge.m,curChallenge.ap);
   document.getElementById('ch-result').textContent='';
   document.getElementById('ch-result').className='challenge-result';
 }
@@ -323,56 +461,56 @@ function checkChallenge(){
   if(!curChallenge)return;
   const c=curChallenge;
   const tH=c.ap==='PM'&&c.h!==12?c.h+12:c.ap==='AM'&&c.h===12?0:c.h;
-  const matchH=clockH===tH;
-  const matchM=Math.abs(clockM-c.m)<=1;
   const matchAP=clockAP===c.ap;
+  const matchH =clockH===tH;
+  const mDiff=Math.min(Math.abs(clockM-c.m), 60-Math.abs(clockM-c.m));
+  const matchM =mDiff<=5;
   const res=document.getElementById('ch-result');
   if(matchH&&matchM&&matchAP){
-    res.textContent='\u2713 Correct! Well done — '+fmtTime12(c.h,c.m,c.ap)+' is exactly right!';
+    res.textContent='✓ Correct! '+fmt12(c.h,c.m,c.ap)+' — well done!';
     res.className='challenge-result ok';
     setTimeout(newChallenge,1800);
   } else {
     let hint='Not quite. ';
-    if(!matchAP)hint+='Check AM / PM. ';
-    if(!matchH)hint+='The hour hand is in the wrong position. ';
-    if(!matchM&&matchH)hint+='The minute hand needs adjusting. ';
+    if(!matchAP) hint+='Check AM / PM first.';
+    else if(!matchH) hint+='Tap HOUR then drag the short dark hand.';
+    else             hint+='Tap MINUTE then drag the long red hand.';
     res.textContent=hint;
     res.className='challenge-result no';
   }
 }
 
-// ============ DURATION ============
+// ══════════════════════════════════════════════════════
+//  DURATION
+// ══════════════════════════════════════════════════════
 const DUR_QS=[
-  {startMins:7*60+30,dur:45,label:'School assembly starts at 7:30 AM and lasts 45 minutes.'},
+  {startMins:7*60+30,dur:45, label:'School assembly starts at 7:30 AM and lasts 45 minutes.'},
   {startMins:14*60+30,dur:105,label:'A film starts at 2:30 PM and lasts 1 hour 45 minutes.'},
-  {startMins:16*60+15,dur:90,label:'Cricket practice starts at 4:15 PM and lasts 1 hour 30 minutes.'},
-  {startMins:10*60+30,dur:75,label:'A cricket match starts at 10:30 AM and lasts 1 hour 15 minutes.'},
-  {startMins:15*60+45,dur:60,label:'The bus journey starts at 3:45 PM and takes exactly 1 hour.'},
-  {startMins:8*60,dur:30,label:'Morning yoga starts at 8:00 AM and lasts 30 minutes.'},
+  {startMins:16*60+15,dur:90, label:'Cricket practice starts at 4:15 PM and lasts 1 hour 30 minutes.'},
+  {startMins:10*60+30,dur:75, label:'A match starts at 10:30 AM and lasts 1 hour 15 minutes.'},
+  {startMins:15*60+45,dur:60, label:'The bus journey starts at 3:45 PM and takes exactly 1 hour.'},
+  {startMins:8*60,   dur:30, label:'Morning yoga starts at 8:00 AM and lasts 30 minutes.'},
 ];
 let curDur=null;
 
-function fmtMins(totalMins){
-  const h=Math.floor(totalMins/60)%24;
-  const m=totalMins%60;
-  const ap=h>=12?'PM':'AM';
+function fmtMins(t){
+  const h=Math.floor(t/60)%24,m=t%60,ap=h>=12?'PM':'AM';
   const hd=h===0?12:h>12?h-12:h;
   return hd+':'+String(m).padStart(2,'0')+' '+ap;
 }
 
 function newDurQ(){
   curDur=DUR_QS[Math.floor(Math.random()*DUR_QS.length)];
-  const endMins=curDur.startMins+curDur.dur;
   document.getElementById('dur-q').textContent=curDur.label+' What time does it end?';
-  const slider=document.getElementById('dur-slider');
-  slider.min=curDur.startMins;slider.max=curDur.startMins+180;slider.value=curDur.startMins;slider.step=5;
+  const sl=document.getElementById('dur-slider');
+  sl.min=curDur.startMins; sl.max=curDur.startMins+180; sl.value=curDur.startMins; sl.step=5;
   document.getElementById('dur-readout').textContent=fmtMins(curDur.startMins);
   document.getElementById('tl-start-lbl').textContent=fmtMins(curDur.startMins);
   document.getElementById('tl-end-lbl').textContent='?';
   document.getElementById('tl-end').style.left='50%';
   document.getElementById('dur-result').textContent='';
-  slider.oninput=()=>{
-    const v=parseInt(slider.value);
+  sl.oninput=()=>{
+    const v=parseInt(sl.value);
     document.getElementById('dur-readout').textContent=fmtMins(v);
     const pct=4+((v-curDur.startMins)/180)*85;
     document.getElementById('tl-end').style.left=Math.min(92,pct)+'%';
@@ -386,34 +524,34 @@ function checkDuration(){
   const correct=curDur.startMins+curDur.dur;
   const res=document.getElementById('dur-result');
   if(Math.abs(v-correct)<=5){
-    res.textContent='\u2713 Correct! The event ends at '+fmtMins(correct)+'. Duration = '+curDur.dur+' minutes.';
+    res.textContent='✓ Correct! Ends at '+fmtMins(correct)+'. Duration = '+curDur.dur+' min.';
     res.className='dur-result ok';
     document.getElementById('tl-end-lbl').textContent=fmtMins(correct);
     document.getElementById('tl-end').style.left='90%';
   } else {
-    const diff=Math.floor(curDur.dur/60);
-    const rem=curDur.dur%60;
-    const durStr=diff>0?diff+'h '+(rem>0?rem+'min':''):rem+'min';
-    res.textContent='\u2717 Not quite. Add '+durStr+' to '+fmtMins(curDur.startMins)+' to get '+fmtMins(correct)+'.';
+    const d=curDur.dur, dStr=(Math.floor(d/60)>0?Math.floor(d/60)+'h ':'')+((d%60)>0?(d%60)+'min':'');
+    res.textContent='✗ Not quite. Add '+dStr+' to '+fmtMins(curDur.startMins)+' → '+fmtMins(correct)+'.';
     res.className='dur-result no';
   }
 }
 
-// ============ PRACTICE ============
+// ══════════════════════════════════════════════════════
+//  PRACTICE
+// ══════════════════════════════════════════════════════
 const Qs=[
-  {q:'How many seconds are in 3 minutes?',ans:'180',opts:['30','60','180','300'],exp:'3 x 60 = 180 seconds'},
-  {q:'A train leaves at 10:45 AM and arrives at 1:15 PM. Journey time?',ans:'2 h 30 min',opts:['1 h 30 min','2 h 30 min','2 h 45 min','3 h'],exp:'10:45 to 1:15 = 2 hours 30 minutes'},
-  {q:'How many minutes in 2 and a half hours?',ans:'150',opts:['120','150','140','250'],exp:'2 x 60 + 30 = 150 minutes'},
-  {q:'A movie starts at 7:20 PM and lasts 1 hour 55 minutes. End time?',ans:'9:15 PM',opts:['8:55 PM','9:15 PM','9:25 PM','8:25 PM'],exp:'7:20 PM + 1h 55min = 9:15 PM'},
-  {q:'How many hours in 3 days?',ans:'72',opts:['24','48','72','36'],exp:'3 x 24 = 72 hours'},
-  {q:'Convert 135 minutes to hours and minutes.',ans:'2 h 15 min',opts:['1 h 35 min','2 h 15 min','2 h 35 min','1 h 15 min'],exp:'135 / 60 = 2 remainder 15 = 2 h 15 min'},
-  {q:'School starts at 8:30 AM and ends at 3:00 PM. How long is the school day?',ans:'6 h 30 min',opts:['5 h 30 min','6 h','6 h 30 min','7 h'],exp:'8:30 AM to 3:00 PM = 6 hours 30 minutes'},
+  {q:'How many seconds are in 3 minutes?',ans:'180',opts:['30','60','180','300'],exp:'3 × 60 = 180 seconds'},
+  {q:'A train leaves at 10:45 AM and arrives at 1:15 PM. Journey time?',ans:'2 h 30 min',opts:['1 h 30 min','2 h 30 min','2 h 45 min','3 h'],exp:'10:45 → 1:15 = 2 h 30 min'},
+  {q:'How many minutes in 2½ hours?',ans:'150',opts:['120','150','140','250'],exp:'2 × 60 + 30 = 150 min'},
+  {q:'A film starts at 7:20 PM and lasts 1 h 55 min. End time?',ans:'9:15 PM',opts:['8:55 PM','9:15 PM','9:25 PM','8:25 PM'],exp:'7:20 PM + 1h 55min = 9:15 PM'},
+  {q:'How many hours are in 3 days?',ans:'72',opts:['24','48','72','36'],exp:'3 × 24 = 72 hours'},
+  {q:'Convert 135 minutes to hours and minutes.',ans:'2 h 15 min',opts:['1 h 35 min','2 h 15 min','2 h 35 min','1 h 15 min'],exp:'135 ÷ 60 = 2 rem 15 → 2 h 15 min'},
+  {q:'School: 8:30 AM to 3:00 PM. How long?',ans:'6 h 30 min',opts:['5 h 30 min','6 h','6 h 30 min','7 h'],exp:'8:30 AM → 3:00 PM = 6 h 30 min'},
 ];
-let qi=0,used=[];
+let pqUsed=[];
 function nextPQ(){
-  if(used.length>=Qs.length)used=[];
-  let idx;do{idx=Math.floor(Math.random()*Qs.length)}while(used.includes(idx));
-  used.push(idx);
+  if(pqUsed.length>=Qs.length) pqUsed=[];
+  let idx; do{ idx=Math.floor(Math.random()*Qs.length); }while(pqUsed.includes(idx));
+  pqUsed.push(idx);
   const q=Qs[idx];
   document.getElementById('pq-text').textContent=q.q;
   document.getElementById('pq-fb').textContent='';
@@ -421,32 +559,40 @@ function nextPQ(){
   const opts=document.getElementById('pq-opts');
   opts.innerHTML='';
   [...q.opts].sort(()=>Math.random()-.5).forEach(o=>{
-    const b=document.createElement('button');b.className='ans-opt';b.textContent=o;
+    const b=document.createElement('button');
+    b.className='ans-opt'; b.textContent=o;
     b.onclick=()=>{
       opts.querySelectorAll('.ans-opt').forEach(x=>x.onclick=null);
       const ok=o===q.ans;
       b.classList.add(ok?'correct':'wrong');
-      if(!ok)opts.querySelectorAll('.ans-opt').forEach(x=>{if(x.textContent===q.ans)x.classList.add('correct')});
+      if(!ok) opts.querySelectorAll('.ans-opt').forEach(x=>{ if(x.textContent===q.ans) x.classList.add('correct'); });
       const fb=document.getElementById('pq-fb');
-      fb.textContent=(ok?'\u2713 Correct! ':'\u2717 Not quite. ')+q.exp;
+      fb.textContent=(ok?'✓ Correct! ':'✗ Not quite. ')+q.exp;
       fb.className='pq-fb '+(ok?'ok':'no');
     };
     opts.appendChild(b);
   });
 }
 
+// ══════════════════════════════════════════════════════
+//  TAB SWITCHING
+// ══════════════════════════════════════════════════════
 function switchTab(t){
-  ['clock','duration','practice'].forEach(x=>document.getElementById('pnl-'+x).classList.toggle('on',x===t));
-  document.querySelectorAll('.tab').forEach((b,i)=>b.classList.toggle('on',['clock','duration','practice'][i]===t));
-  if(t==='practice')nextPQ();
-  if(t==='duration')newDurQ();
+  ['clock','duration','practice'].forEach(x=>
+    document.getElementById('pnl-'+x).classList.toggle('on',x===t));
+  document.querySelectorAll('.tab').forEach((b,i)=>
+    b.classList.toggle('on',['clock','duration','practice'][i]===t));
+  if(t==='practice') nextPQ();
+  if(t==='duration')  newDurQ();
 }
 
-// Init
-drawClock();
-newChallenge();
-newDurQ();
-nextPQ();
+// ══════════════════════════════════════════════════════
+//  INIT
+// ══════════════════════════════════════════════════════
+// Size clock after layout is ready, then watch for resize
+window.addEventListener('resize', sizeClock);
+// Use setTimeout to allow CSS to apply first
+setTimeout(()=>{ sizeClock(); newChallenge(); newDurQ(); nextPQ(); }, 50);
 </script>
 </body>
 </html>

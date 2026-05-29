@@ -8,7 +8,6 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
-  /* Navy + cream + gold — calm, readable, elegant */
   --navy:#1B2A4A;--navy2:#0F1E36;--navy3:#253660;
   --gold:#C9963A;--gold2:#A07828;--gold-light:#F5E6C8;
   --cream:#FAF6ED;--cream2:#F0E9D6;--cream3:#E4D8BC;
@@ -23,7 +22,6 @@
 }
 html,body{width:100%;min-height:100vh;background:var(--cream);color:var(--ink);font-family:var(--sans);overflow-x:hidden;-webkit-tap-highlight-color:transparent}
 
-/* ── HEADER ── */
 .hdr{
   background:var(--navy);padding:0 20px;display:flex;align-items:center;gap:12px;
   height:52px;border-bottom:3px solid var(--navy2);position:sticky;top:0;z-index:100;
@@ -40,11 +38,9 @@ html,body{width:100%;min-height:100vh;background:var(--cream);color:var(--ink);f
 .tab.on{background:var(--cream);color:var(--navy);font-weight:600}
 .tab:hover:not(.on){color:rgba(245,230,200,0.85)}
 
-/* ── LAYOUT ── */
 .main{max-width:480px;margin:0 auto;padding:16px 14px 56px}
 .pnl{display:none}.pnl.on{display:block}
 
-/* ── CARD ── */
 .card{background:var(--white);border-radius:var(--radius);
   box-shadow:0 1px 3px rgba(27,42,74,0.08),0 4px 16px rgba(27,42,74,0.08);
   margin-bottom:14px;overflow:hidden}
@@ -52,19 +48,18 @@ html,body{width:100%;min-height:100vh;background:var(--cream);color:var(--ink);f
   letter-spacing:1.8px;text-transform:uppercase;color:var(--ink3)}
 .card-body{padding:14px 16px 16px}
 
-/* ── CLOCK ── */
 .clock-outer{
-  display:flex;flex-direction:column;align-items:center;gap:0;
+  display:flex;flex-direction:column;align-items:center;
   padding:16px 16px 0;
 }
 #clock-canvas{
-  display:block;border-radius:50%;touch-action:none;cursor:crosshair;
+  display:block;border-radius:50%;
+  touch-action:none;cursor:crosshair;
+  /* CSS size only — JS sets actual width/height attributes */
   width:min(268px,calc(100vw - 60px));
   height:min(268px,calc(100vw - 60px));
-  /* shadow done in JS on the face, not here to avoid clipping */
 }
 
-/* Hand selector */
 .hand-row{
   display:flex;gap:8px;justify-content:center;
   padding:14px 16px 0;
@@ -85,7 +80,6 @@ html,body{width:100%;min-height:100vh;background:var(--cream);color:var(--ink);f
 .hand-btn-m .hb-dot{background:var(--rose)}
 .hand-btn-m.active .hb-dot{background:rgba(255,255,255,0.7)}
 
-/* Time display */
 .time-row{
   display:flex;align-items:baseline;justify-content:center;gap:6px;
   padding:10px 16px 0;
@@ -93,7 +87,6 @@ html,body{width:100%;min-height:100vh;background:var(--cream);color:var(--ink);f
 .time-dig{font-family:var(--mono);font-size:clamp(36px,9vw,48px);font-weight:600;color:var(--navy);line-height:1}
 .time-ap{font-family:var(--mono);font-size:14px;font-weight:600;color:var(--ink3)}
 
-/* AM/PM */
 .ampm-row{display:flex;gap:8px;justify-content:center;padding:10px 16px 16px}
 .ampm-btn{
   flex:1;max-width:100px;padding:9px;font-family:var(--mono);font-size:12px;font-weight:600;
@@ -102,7 +95,6 @@ html,body{width:100%;min-height:100vh;background:var(--cream);color:var(--ink);f
 }
 .ampm-btn.on{background:var(--navy);border-color:var(--navy);color:var(--white)}
 
-/* ── CHALLENGE ── */
 .chall-board{background:var(--navy);border-radius:var(--radius);padding:16px;margin-bottom:14px}
 .chall-label{font-family:var(--mono);font-size:9px;letter-spacing:1.8px;text-transform:uppercase;
   color:rgba(245,230,200,0.45);margin-bottom:8px}
@@ -130,7 +122,6 @@ html,body{width:100%;min-height:100vh;background:var(--cream);color:var(--ink);f
 .ch-result{margin-top:12px;font-family:var(--sans);font-size:14px;min-height:20px;line-height:1.5;font-weight:500}
 .ch-result.ok{color:#5EC99A}.ch-result.no{color:#F8A09A}
 
-/* ── DURATION ── */
 .dur-q{font-family:var(--serif);font-style:italic;font-size:clamp(15px,4vw,17px);
   color:var(--ink);line-height:1.65;margin-bottom:16px}
 .tl-wrap{position:relative;margin-bottom:36px}
@@ -150,7 +141,6 @@ html,body{width:100%;min-height:100vh;background:var(--cream);color:var(--ink);f
   line-height:1.5;font-weight:500}
 .dur-result.ok{color:var(--teal)}.dur-result.no{color:var(--rose)}
 
-/* ── PRACTICE ── */
 .pq-text{font-family:var(--serif);font-style:italic;font-size:clamp(15px,4.2vw,18px);
   color:var(--ink);line-height:1.65;margin-bottom:16px}
 .ans-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
@@ -204,16 +194,13 @@ html,body{width:100%;min-height:100vh;background:var(--cream);color:var(--ink);f
 
 <div class="main">
 
-<!-- ══ CLOCK TAB ══ -->
+<!-- CLOCK TAB -->
 <div class="pnl on" id="pnl-clock">
-
   <div class="card">
     <div class="card-head">Interactive clock</div>
-    <!-- Canvas -->
     <div class="clock-outer">
       <canvas id="clock-canvas"></canvas>
     </div>
-    <!-- Hand selector -->
     <div class="hand-row">
       <button class="hand-btn hand-btn-h active" id="btn-h" onclick="setMode('hour')">
         <span class="hb-dot"></span>Hour hand
@@ -222,19 +209,16 @@ html,body{width:100%;min-height:100vh;background:var(--cream);color:var(--ink);f
         <span class="hb-dot"></span>Minute hand
       </button>
     </div>
-    <!-- Time -->
     <div class="time-row">
       <div class="time-dig" id="t-dig">12:00</div>
       <div class="time-ap" id="t-ap">PM</div>
     </div>
-    <!-- AM/PM -->
     <div class="ampm-row">
       <button class="ampm-btn" id="am-btn" onclick="setAP('AM')">AM</button>
       <button class="ampm-btn on" id="pm-btn" onclick="setAP('PM')">PM</button>
     </div>
   </div>
 
-  <!-- Challenge -->
   <div class="chall-board">
     <div class="chall-label">Challenge</div>
     <div class="chall-target" id="ch-target">3:45 PM</div>
@@ -248,10 +232,9 @@ html,body{width:100%;min-height:100vh;background:var(--cream);color:var(--ink);f
     </div>
     <div class="ch-result" id="ch-result"></div>
   </div>
-
 </div>
 
-<!-- ══ DURATION TAB ══ -->
+<!-- DURATION TAB -->
 <div class="pnl" id="pnl-duration">
   <div class="card">
     <div class="card-head">Calculate duration</div>
@@ -281,7 +264,7 @@ html,body{width:100%;min-height:100vh;background:var(--cream);color:var(--ink);f
   </div>
 </div>
 
-<!-- ══ PRACTICE TAB ══ -->
+<!-- PRACTICE TAB -->
 <div class="pnl" id="pnl-practice">
   <div class="card">
     <div class="card-head">Quick fire practice</div>
@@ -294,395 +277,446 @@ html,body{width:100%;min-height:100vh;background:var(--cream);color:var(--ink);f
   </div>
 </div>
 
-</div><!-- /main -->
+</div>
 
 <script>
-// ══════════════════════════════════════════════════════════════════════
-//  CLOCK — fully self-contained, no global CX/CY races
-// ══════════════════════════════════════════════════════════════════════
+// ─── CLOCK ────────────────────────────────────────────────────────────────────
 const cvs = document.getElementById('clock-canvas');
 const ctx = cvs.getContext('2d');
 
-// All clock state in one object
 const C = {
-  px:0,          // canvas pixel size (width == height)
-  pr:1,          // device pixel ratio used
-  cx:0,cy:0,r:0, // centre and radius in CSS px
-  h:12, m:0, ap:'PM',
-  mode:'hour',   // 'hour' | 'minute'
-  drag:false,
+  h: 12, m: 0, ap: 'PM',
+  mode: 'hour',
+  drag: false,
+  // geometry — set by clockResize(), read by all draw/drag functions
+  cssSize: 268,  // canvas CSS width (= height)
+  cx: 134, cy: 134, r: 132,
+  dpr: 1,
 };
 
-/* ── Size the canvas and derive geometry ── */
-function clockResize(){
-  C.pr = Math.min(window.devicePixelRatio||1, 2);
-  // Read CSS size AFTER layout
-  const css = cvs.getBoundingClientRect().width || 268;
-  C.px = Math.round(css);
-  cvs.width  = C.px * C.pr;
-  cvs.height = C.px * C.pr;
-  // All drawing uses CSS-px coords; we scale the context
-  ctx.setTransform(C.pr, 0, 0, C.pr, 0, 0);
-  C.cx = C.cy = C.px / 2;
-  C.r  = C.px / 2 - 2; // tiny inset so stroke doesn't clip
+// Size the canvas backing store to match its CSS size × DPR.
+// We draw in CSS-px coordinates throughout; context is pre-scaled.
+function clockResize() {
+  C.dpr = Math.min(window.devicePixelRatio || 1, 3);
+  // getBoundingClientRect gives the true CSS pixel size after layout.
+  const rect = cvs.getBoundingClientRect();
+  C.cssSize = rect.width > 0 ? rect.width : 268;
+  cvs.width  = Math.round(C.cssSize * C.dpr);
+  cvs.height = Math.round(C.cssSize * C.dpr);
+  ctx.setTransform(C.dpr, 0, 0, C.dpr, 0, 0);
+  C.cx = C.cssSize / 2;
+  C.cy = C.cssSize / 2;
+  C.r  = C.cssSize / 2 - 3;
   clockDraw();
 }
 
-/* ── Get pointer position in CSS-px relative to canvas ── */
-function clockPt(e){
+// Convert a pointer/touch event to CSS-px coords relative to the canvas.
+// getBoundingClientRect() already returns CSS pixels, so no DPR division needed.
+function clockPt(e) {
   const rc = cvs.getBoundingClientRect();
   const src = e.touches ? e.touches[0] : e;
   return {
-    x: (src.clientX - rc.left),  // already CSS-px; no need to divide by PR
-    y: (src.clientY - rc.top),
+    x: src.clientX - rc.left,
+    y: src.clientY - rc.top,
   };
 }
 
-/* ── Angle helpers ── */
-// clockH is 0-23, m is 0-59
-function angles(){
-  const ha = (C.h%12 + C.m/60) * (Math.PI*2/12) - Math.PI/2;
-  const ma = C.m * (Math.PI*2/60) - Math.PI/2;
+function handAngles() {
+  // hour angle accounts for minute progress within the hour
+  const ha = (C.h % 12 + C.m / 60) * (Math.PI * 2 / 12) - Math.PI / 2;
+  const ma = C.m * (Math.PI * 2 / 60) - Math.PI / 2;
   return { ha, ma };
 }
 
-/* ── Draw ── */
-function clockDraw(){
-  const {cx,cy,r,px} = C;
-  ctx.clearRect(0,0,px,px);
+function clockDraw() {
+  const { cx, cy, r, cssSize } = C;
+  ctx.clearRect(0, 0, cssSize, cssSize);
 
-  // Face gradient
-  const g = ctx.createRadialGradient(cx,cy-r*0.15,r*0.1, cx,cy,r);
-  g.addColorStop(0,'#FEFCF5');
-  g.addColorStop(0.6,'#F5EDD8');
-  g.addColorStop(1,'#E8D8B0');
-  ctx.beginPath(); ctx.arc(cx,cy,r,0,Math.PI*2);
-  ctx.fillStyle=g; ctx.fill();
-
-  // Subtle drop shadow ring (draw outside face)
-  ctx.beginPath(); ctx.arc(cx,cy,r+1,0,Math.PI*2);
-  ctx.strokeStyle='rgba(27,42,74,0.12)'; ctx.lineWidth=4; ctx.stroke();
+  // Face
+  ctx.beginPath();
+  ctx.arc(cx, cy, r, 0, Math.PI * 2);
+  ctx.fillStyle = '#F9F4E8';
+  ctx.fill();
 
   // Bezel
-  ctx.beginPath(); ctx.arc(cx,cy,r,0,Math.PI*2);
-  ctx.strokeStyle='#1B2A4A'; ctx.lineWidth=5; ctx.stroke();
-
-  // Inner rim
-  ctx.beginPath(); ctx.arc(cx,cy,r-9,0,Math.PI*2);
-  ctx.strokeStyle='rgba(27,42,74,0.08)'; ctx.lineWidth=1.5; ctx.stroke();
+  ctx.beginPath();
+  ctx.arc(cx, cy, r, 0, Math.PI * 2);
+  ctx.strokeStyle = '#1B2A4A';
+  ctx.lineWidth = 5;
+  ctx.stroke();
 
   // Ticks
-  for(let i=0;i<60;i++){
-    const a = i*(Math.PI*2/60)-Math.PI/2;
-    const maj = i%5===0;
-    const r0 = r - (maj?3:2);
-    const r1 = r - (maj?20:10);
-    ctx.strokeStyle = maj ? '#1B2A4A' : 'rgba(27,42,74,0.18)';
+  for (let i = 0; i < 60; i++) {
+    const a = i * (Math.PI * 2 / 60) - Math.PI / 2;
+    const maj = i % 5 === 0;
+    const r0 = r - (maj ? 2 : 1);
+    const r1 = r - (maj ? 18 : 9);
+    ctx.strokeStyle = maj ? '#1B2A4A' : 'rgba(27,42,74,0.2)';
     ctx.lineWidth = maj ? 2.5 : 1;
     ctx.beginPath();
-    ctx.moveTo(cx+Math.cos(a)*r0, cy+Math.sin(a)*r0);
-    ctx.lineTo(cx+Math.cos(a)*r1, cy+Math.sin(a)*r1);
+    ctx.moveTo(cx + Math.cos(a) * r0, cy + Math.sin(a) * r0);
+    ctx.lineTo(cx + Math.cos(a) * r1, cy + Math.sin(a) * r1);
     ctx.stroke();
   }
 
   // Numbers
-  const fs = Math.max(10, Math.round(r*0.112));
+  const fs = Math.max(10, Math.round(r * 0.115));
   ctx.font = `600 ${fs}px "DM Mono",monospace`;
-  ctx.fillStyle='#1B2A4A'; ctx.textAlign='center'; ctx.textBaseline='middle';
-  [12,1,2,3,4,5,6,7,8,9,10,11].forEach((n,i)=>{
-    const a = i*(Math.PI*2/12)-Math.PI/2;
-    const nr = r-34;
-    ctx.fillText(n, cx+Math.cos(a)*nr, cy+Math.sin(a)*nr);
+  ctx.fillStyle = '#1B2A4A';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  [12,1,2,3,4,5,6,7,8,9,10,11].forEach((n, i) => {
+    const a = i * (Math.PI * 2 / 12) - Math.PI / 2;
+    const nr = r - 32;
+    ctx.fillText(n, cx + Math.cos(a) * nr, cy + Math.sin(a) * nr);
   });
 
-  const {ha,ma} = angles();
-  const hLen = r*0.50, mLen = r*0.72;
-  const hourActive = C.mode==='hour';
+  const { ha, ma } = handAngles();
+  const hLen = r * 0.52;
+  const mLen = r * 0.73;
+  const hourActive = C.mode === 'hour';
 
-  // Draw inactive hand first (behind)
-  if(hourActive) drawHand(ma,mLen,'minute',false);
-  else           drawHand(ha,hLen,'hour',false);
-  // Draw active hand on top
-  if(hourActive) drawHand(ha,hLen,'hour',true);
-  else           drawHand(ma,mLen,'minute',true);
+  // Draw inactive hand behind active one
+  if (hourActive) {
+    drawHand(ma, mLen, 'minute', false);
+    drawHand(ha, hLen, 'hour',   true);
+  } else {
+    drawHand(ha, hLen, 'hour',   false);
+    drawHand(ma, mLen, 'minute', true);
+  }
 
-  // Glow ring on active tip
+  // Glow ring at active hand tip
   const ga = hourActive ? ha : ma;
   const gl = hourActive ? hLen : mLen;
-  const tx=cx+Math.cos(ga)*gl, ty=cy+Math.sin(ga)*gl;
-  ctx.beginPath(); ctx.arc(tx,ty,Math.round(r*0.1),0,Math.PI*2);
+  const tx = cx + Math.cos(ga) * gl;
+  const ty = cy + Math.sin(ga) * gl;
+  ctx.beginPath();
+  ctx.arc(tx, ty, Math.round(r * 0.1), 0, Math.PI * 2);
   ctx.strokeStyle = hourActive ? 'rgba(27,42,74,0.35)' : 'rgba(192,57,43,0.45)';
-  ctx.lineWidth=2; ctx.setLineDash([3,3]); ctx.stroke(); ctx.setLineDash([]);
+  ctx.lineWidth = 2;
+  ctx.setLineDash([3, 3]);
+  ctx.stroke();
+  ctx.setLineDash([]);
 
-  // Centre
-  ctx.beginPath(); ctx.arc(cx,cy,Math.round(r*0.06),0,Math.PI*2);
-  ctx.fillStyle='#1B2A4A'; ctx.fill();
-  ctx.beginPath(); ctx.arc(cx,cy,Math.round(r*0.03),0,Math.PI*2);
-  ctx.fillStyle='#C9963A'; ctx.fill();
+  // Centre boss
+  ctx.beginPath();
+  ctx.arc(cx, cy, Math.round(r * 0.06), 0, Math.PI * 2);
+  ctx.fillStyle = '#1B2A4A';
+  ctx.fill();
+  ctx.beginPath();
+  ctx.arc(cx, cy, Math.round(r * 0.03), 0, Math.PI * 2);
+  ctx.fillStyle = '#C9963A';
+  ctx.fill();
 
-  // Update text
-  const hd = C.h===0?12:C.h>12?C.h-12:C.h;
-  document.getElementById('t-dig').textContent = hd+':'+String(C.m).padStart(2,'0');
+  // Update digital display
+  const hd = C.h === 0 ? 12 : C.h > 12 ? C.h - 12 : C.h;
+  document.getElementById('t-dig').textContent = hd + ':' + String(C.m).padStart(2, '0');
   document.getElementById('t-ap').textContent  = C.ap;
 }
 
-function drawHand(angle, len, type, active){
-  const {cx,cy,r} = C;
-  const tail = len*0.2;
-  const tx=cx+Math.cos(angle)*len, ty=cy+Math.sin(angle)*len;
-  const bx=cx-Math.cos(angle)*tail, by=cy-Math.sin(angle)*tail;
-
-  const isH = type==='hour';
+function drawHand(angle, len, type, active) {
+  const { cx, cy, r } = C;
+  const tail  = len * 0.2;
+  const tx = cx + Math.cos(angle) * len;
+  const ty = cy + Math.sin(angle) * len;
+  const bx = cx - Math.cos(angle) * tail;
+  const by = cy - Math.sin(angle) * tail;
+  const isH  = type === 'hour';
   const thick = isH
-    ? (active ? Math.round(r*0.068) : Math.round(r*0.05))
-    : (active ? Math.round(r*0.048) : Math.round(r*0.034));
+    ? (active ? Math.round(r * 0.07)  : Math.round(r * 0.05))
+    : (active ? Math.round(r * 0.048) : Math.round(r * 0.034));
   const col = isH
     ? (active ? '#1B2A4A' : 'rgba(27,42,74,0.28)')
-    : (active ? '#C0392B' : 'rgba(192,57,43,0.28)');
+    : (active ? '#C0392B' : 'rgba(192,57,43,0.3)');
 
-  // Shadow only on active
-  if(active){
-    ctx.save();
-    ctx.shadowColor='rgba(0,0,0,0.22)';
-    ctx.shadowBlur=8; ctx.shadowOffsetY=3;
-    ctx.strokeStyle=col; ctx.lineWidth=thick; ctx.lineCap='round';
-    ctx.beginPath(); ctx.moveTo(bx,by); ctx.lineTo(tx,ty); ctx.stroke();
-    ctx.restore();
-  } else {
-    ctx.strokeStyle=col; ctx.lineWidth=thick; ctx.lineCap='round';
-    ctx.beginPath(); ctx.moveTo(bx,by); ctx.lineTo(tx,ty); ctx.stroke();
-  }
+  ctx.strokeStyle = col;
+  ctx.lineWidth   = thick;
+  ctx.lineCap     = 'round';
+  ctx.beginPath();
+  ctx.moveTo(bx, by);
+  ctx.lineTo(tx, ty);
+  ctx.stroke();
 
   // Tip circle
-  const tipR = active ? Math.round(r*0.055) : Math.round(r*0.04);
-  ctx.beginPath(); ctx.arc(tx,ty,tipR,0,Math.PI*2);
-  ctx.fillStyle=col; ctx.fill();
-  if(active){
-    ctx.strokeStyle='rgba(255,255,255,0.6)'; ctx.lineWidth=1.5; ctx.stroke();
+  const tipR = active ? Math.round(r * 0.056) : Math.round(r * 0.04);
+  ctx.beginPath();
+  ctx.arc(tx, ty, tipR, 0, Math.PI * 2);
+  ctx.fillStyle = col;
+  ctx.fill();
+  if (active) {
+    ctx.strokeStyle = 'rgba(255,255,255,0.65)';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
   }
 }
 
-/* ── Mode toggle ── */
-function setMode(m){
-  C.mode=m;
-  document.getElementById('btn-h').classList.toggle('active',m==='hour');
-  document.getElementById('btn-m').classList.toggle('active',m==='minute');
-  clockDraw();
+// ─── Drag ────────────────────────────────────────────────────────────────────
+
+function onDragStart(e) {
+  e.preventDefault();
+  C.drag = true;
+  handleAngle(e);
+}
+function onDragEnd() {
+  C.drag = false;
+}
+function onDragMove(e) {
+  if (!C.drag) return;
+  e.preventDefault();
+  handleAngle(e);
 }
 
-/* ── Drag ── */
-function onDragStart(e){ e.preventDefault(); C.drag=true; onDragMove(e); }
-function onDragEnd(){ C.drag=false; }
-function onDragMove(e){
-  if(!C.drag)return;
-  e.preventDefault();
-  const p = clockPt(e);                           // CSS px relative to canvas element
+// Core: compute angle from centre → update the correct hand → redraw.
+function handleAngle(e) {
+  const p  = clockPt(e);                          // CSS px relative to canvas top-left
   const dx = p.x - C.cx;
   const dy = p.y - C.cy;
-  // angle from 12 o'clock, clockwise, 0…2π
-  const raw  = Math.atan2(dy, dx);
-  const norm = ((raw + Math.PI/2) % (Math.PI*2) + Math.PI*2) % (Math.PI*2);
 
-  if(C.mode==='minute'){
-    // smooth 1-minute resolution
-    C.m = Math.round(norm / (Math.PI*2) * 60) % 60;
+  // Raw atan2 angle (0 = 3 o'clock), converted to 0…2π clockwise from 12 o'clock
+  const raw  = Math.atan2(dy, dx);
+  const norm = ((raw + Math.PI / 2) % (Math.PI * 2) + Math.PI * 2) % (Math.PI * 2);
+
+  if (C.mode === 'minute') {
+    // map 0…2π → 0…59 minutes
+    C.m = Math.round(norm / (Math.PI * 2) * 60) % 60;
   } else {
-    // smooth hour — don't snap, just nearest 1-hour position
-    const rawH = norm / (Math.PI*2) * 12;
-    const h12  = Math.round(rawH) % 12;
-    C.h = C.ap==='PM' ? (h12===0?12:h12+12) : (h12===0?0:h12);
+    // map 0…2π → 1…12 hours, preserve AM/PM offset
+    const rawH = norm / (Math.PI * 2) * 12;  // 0…12
+    const h12  = Math.round(rawH) % 12;       // 0…11 (0 = 12 o'clock)
+    // store as 0-23
+    if (C.ap === 'AM') {
+      C.h = h12 === 0 ? 0 : h12;
+    } else {
+      C.h = h12 === 0 ? 12 : h12 + 12;
+    }
   }
   clockDraw();
 }
 
-cvs.addEventListener('mousedown', onDragStart);
+cvs.addEventListener('mousedown',  onDragStart);
 window.addEventListener('mousemove', onDragMove);
-window.addEventListener('mouseup', onDragEnd);
-cvs.addEventListener('touchstart', onDragStart, {passive:false});
-window.addEventListener('touchmove', onDragMove, {passive:false});
-window.addEventListener('touchend', onDragEnd);
+window.addEventListener('mouseup',   onDragEnd);
+cvs.addEventListener('touchstart', onDragStart, { passive: false });
+window.addEventListener('touchmove',  onDragMove, { passive: false });
+window.addEventListener('touchend',   onDragEnd);
 
-/* ── AM/PM ── */
-function setAP(ap){
-  C.ap=ap;
-  if(ap==='AM' && C.h>=12) C.h-=12;
-  if(ap==='PM' && C.h<12)  C.h+=12;
-  document.getElementById('am-btn').classList.toggle('on',ap==='AM');
-  document.getElementById('pm-btn').classList.toggle('on',ap==='PM');
+// ─── Mode & AM/PM ────────────────────────────────────────────────────────────
+
+function setMode(m) {
+  C.mode = m;
+  document.getElementById('btn-h').classList.toggle('active', m === 'hour');
+  document.getElementById('btn-m').classList.toggle('active', m === 'minute');
   clockDraw();
 }
 
-// ══════════════════════════════════════════════════════════════════════
-//  CHALLENGES
-// ══════════════════════════════════════════════════════════════════════
-const CHALLS=[
+function setAP(ap) {
+  C.ap = ap;
+  if (ap === 'AM' && C.h >= 12) C.h -= 12;
+  if (ap === 'PM' && C.h <  12) C.h += 12;
+  document.getElementById('am-btn').classList.toggle('on', ap === 'AM');
+  document.getElementById('pm-btn').classList.toggle('on', ap === 'PM');
+  clockDraw();
+}
+
+// ─── Challenges ──────────────────────────────────────────────────────────────
+
+const CHALLS = [
   {h:3,m:45,ap:'PM'},{h:7,m:30,ap:'AM'},{h:12,m:0,ap:'PM'},{h:9,m:15,ap:'AM'},
   {h:6,m:0,ap:'PM'},{h:2,m:50,ap:'PM'},{h:11,m:30,ap:'AM'},{h:4,m:20,ap:'PM'},
   {h:8,m:0,ap:'AM'},{h:1,m:15,ap:'PM'},{h:10,m:45,ap:'AM'},{h:5,m:30,ap:'PM'},
 ];
-let curC=null, cUsed=[];
+let curC = null, cUsed = [];
 
-function fmt12(h,m,ap){
-  const hd=h===0?12:h>12?h-12:h;
-  return hd+':'+String(m).padStart(2,'0')+' '+ap;
+function fmt12(h, m, ap) {
+  const hd = h === 0 ? 12 : h > 12 ? h - 12 : h;
+  return hd + ':' + String(m).padStart(2, '0') + ' ' + ap;
 }
 
-function newChall(){
-  if(cUsed.length>=CHALLS.length) cUsed=[];
-  let i; do{ i=Math.floor(Math.random()*CHALLS.length); }while(cUsed.includes(i));
-  cUsed.push(i); curC=CHALLS[i];
-  document.getElementById('ch-target').textContent=fmt12(curC.h,curC.m,curC.ap);
-  const r=document.getElementById('ch-result');
-  r.textContent=''; r.className='ch-result';
+function newChall() {
+  if (cUsed.length >= CHALLS.length) cUsed = [];
+  let i;
+  do { i = Math.floor(Math.random() * CHALLS.length); } while (cUsed.includes(i));
+  cUsed.push(i);
+  curC = CHALLS[i];
+  document.getElementById('ch-target').textContent = fmt12(curC.h, curC.m, curC.ap);
+  const r = document.getElementById('ch-result');
+  r.textContent = '';
+  r.className   = 'ch-result';
 }
 
-function checkChall(){
-  if(!curC)return;
-  const tH = curC.ap==='PM'&&curC.h!==12 ? curC.h+12
-           : curC.ap==='AM'&&curC.h===12  ? 0 : curC.h;
-  const okAP = C.ap===curC.ap;
-  const okH  = C.h===tH;
-  const md   = Math.min(Math.abs(C.m-curC.m), 60-Math.abs(C.m-curC.m));
-  const okM  = md<=2;   // ±2 min tolerance (1-min resolution)
-  const r=document.getElementById('ch-result');
-  if(okAP&&okH&&okM){
-    r.textContent='✓ Correct! '+fmt12(curC.h,curC.m,curC.ap)+' — great job!';
-    r.className='ch-result ok';
-    setTimeout(newChall,1800);
+function checkChall() {
+  if (!curC) return;
+  // Normalise target to 0-23
+  let tH = curC.h;
+  if (curC.ap === 'PM' && curC.h !== 12) tH = curC.h + 12;
+  if (curC.ap === 'AM' && curC.h === 12) tH = 0;
+
+  const okAP = C.ap === curC.ap;
+  const okH  = C.h  === tH;
+  const md   = Math.min(Math.abs(C.m - curC.m), 60 - Math.abs(C.m - curC.m));
+  const okM  = md <= 2;
+
+  const r = document.getElementById('ch-result');
+  if (okAP && okH && okM) {
+    r.textContent = '✓ Correct! ' + fmt12(curC.h, curC.m, curC.ap) + ' — great job!';
+    r.className   = 'ch-result ok';
+    setTimeout(newChall, 1800);
   } else {
-    let msg='Not quite. ';
-    if(!okAP)     msg+='Check AM / PM first.';
-    else if(!okH) msg+='Tap "Hour hand" and move the short dark hand.';
-    else          msg+='Tap "Minute hand" and move the long red hand.';
-    r.textContent=msg; r.className='ch-result no';
+    let msg = 'Not quite. ';
+    if (!okAP)      msg += 'Check AM / PM first.';
+    else if (!okH)  msg += 'Move the short dark hand to the correct hour.';
+    else            msg += 'Move the long red hand to the correct minute.';
+    r.textContent = msg;
+    r.className   = 'ch-result no';
   }
 }
 
-// ══════════════════════════════════════════════════════════════════════
-//  DURATION
-// ══════════════════════════════════════════════════════════════════════
-const DURS=[
-  {s:7*60+30, d:45,  q:'School assembly starts at 7:30 AM and lasts 45 minutes.'},
-  {s:14*60+30,d:105, q:'A film starts at 2:30 PM and lasts 1 hour 45 minutes.'},
-  {s:16*60+15,d:90,  q:'Cricket practice starts at 4:15 PM and lasts 1 hour 30 minutes.'},
-  {s:10*60+30,d:75,  q:'A match starts at 10:30 AM and lasts 1 hour 15 minutes.'},
-  {s:15*60+45,d:60,  q:'The bus journey starts at 3:45 PM and takes exactly 1 hour.'},
-  {s:8*60,    d:30,  q:'Morning yoga starts at 8:00 AM and lasts 30 minutes.'},
-];
-let curD=null;
+// ─── Duration ────────────────────────────────────────────────────────────────
 
-function fmtM(t){
-  const h=Math.floor(t/60)%24, m=t%60, ap=h>=12?'PM':'AM';
-  const hd=h===0?12:h>12?h-12:h;
-  return hd+':'+String(m).padStart(2,'0')+' '+ap;
+const DURS = [
+  {s:7*60+30,  d:45,  q:'School assembly starts at 7:30 AM and lasts 45 minutes.'},
+  {s:14*60+30, d:105, q:'A film starts at 2:30 PM and lasts 1 hour 45 minutes.'},
+  {s:16*60+15, d:90,  q:'Cricket practice starts at 4:15 PM and lasts 1 hour 30 minutes.'},
+  {s:10*60+30, d:75,  q:'A match starts at 10:30 AM and lasts 1 hour 15 minutes.'},
+  {s:15*60+45, d:60,  q:'The bus journey starts at 3:45 PM and takes exactly 1 hour.'},
+  {s:8*60,     d:30,  q:'Morning yoga starts at 8:00 AM and lasts 30 minutes.'},
+];
+let curD = null;
+
+function fmtM(t) {
+  t = ((t % 1440) + 1440) % 1440;
+  const h  = Math.floor(t / 60);
+  const m  = t % 60;
+  const ap = h >= 12 ? 'PM' : 'AM';
+  const hd = h === 0 ? 12 : h > 12 ? h - 12 : h;
+  return hd + ':' + String(m).padStart(2, '0') + ' ' + ap;
 }
 
-function newDur(){
-  curD=DURS[Math.floor(Math.random()*DURS.length)];
-  document.getElementById('dur-q').textContent=curD.q+' What time does it end?';
-  const sl=document.getElementById('dur-sl');
-  sl.min=curD.s; sl.max=curD.s+180; sl.value=curD.s; sl.step=1;
-  document.getElementById('dur-out').textContent=fmtM(curD.s);
-  document.getElementById('tl-s-lbl').textContent=fmtM(curD.s);
-  document.getElementById('tl-e-lbl').textContent='?';
-  document.getElementById('tl-e').style.left='50%';
-  document.getElementById('tl-fill').style.width='4%';
-  document.getElementById('dur-res').textContent='';
-  sl.oninput=()=>{
-    const v=+sl.value;
-    document.getElementById('dur-out').textContent=fmtM(v);
-    const pct=4+((v-curD.s)/180)*85;
-    const capped=Math.min(92,pct);
-    document.getElementById('tl-e').style.left=capped+'%';
-    document.getElementById('tl-fill').style.width=capped+'%';
-    document.getElementById('tl-e-lbl').textContent=fmtM(v);
+function newDur() {
+  curD = DURS[Math.floor(Math.random() * DURS.length)];
+  document.getElementById('dur-q').textContent = curD.q + ' What time does it end?';
+  const sl = document.getElementById('dur-sl');
+  sl.min   = curD.s;
+  sl.max   = curD.s + 180;
+  sl.value = curD.s;
+  sl.step  = 1;
+  document.getElementById('dur-out').textContent  = fmtM(curD.s);
+  document.getElementById('tl-s-lbl').textContent = fmtM(curD.s);
+  document.getElementById('tl-e-lbl').textContent = '?';
+  document.getElementById('tl-e').style.left      = '50%';
+  document.getElementById('tl-fill').style.width  = '4%';
+  document.getElementById('dur-res').textContent  = '';
+  document.getElementById('dur-res').className    = 'dur-result';
+
+  sl.oninput = () => {
+    const v   = +sl.value;
+    const pct = 4 + ((v - curD.s) / 180) * 88;
+    document.getElementById('dur-out').textContent  = fmtM(v);
+    document.getElementById('tl-e').style.left      = Math.min(92, pct) + '%';
+    document.getElementById('tl-fill').style.width  = Math.min(92, pct) + '%';
+    document.getElementById('tl-e-lbl').textContent = fmtM(v);
   };
 }
 
-function checkDur(){
-  if(!curD)return;
-  const v=+document.getElementById('dur-sl').value;
-  const ans=curD.s+curD.d;
-  const res=document.getElementById('dur-res');
-  if(Math.abs(v-ans)<=2){
-    res.textContent='✓ Correct! Ends at '+fmtM(ans)+'. Duration = '+curD.d+' min.';
-    res.className='dur-result ok';
-    document.getElementById('tl-e-lbl').textContent=fmtM(ans);
-    document.getElementById('tl-e').style.left='91%';
-    document.getElementById('tl-fill').style.width='91%';
+function checkDur() {
+  if (!curD) return;
+  const v   = +document.getElementById('dur-sl').value;
+  const ans = curD.s + curD.d;
+  const res = document.getElementById('dur-res');
+  if (Math.abs(v - ans) <= 2) {
+    res.textContent = '✓ Correct! Ends at ' + fmtM(ans) + '. Duration = ' + curD.d + ' min.';
+    res.className   = 'dur-result ok';
+    document.getElementById('tl-e-lbl').textContent = fmtM(ans);
+    document.getElementById('tl-e').style.left      = '92%';
+    document.getElementById('tl-fill').style.width  = '92%';
   } else {
-    const d=curD.d, ds=(Math.floor(d/60)?Math.floor(d/60)+'h ':'')+(d%60?(d%60)+'min':'');
-    res.textContent='✗ Not quite. Add '+ds.trim()+' to '+fmtM(curD.s)+' → '+fmtM(ans);
-    res.className='dur-result no';
+    const d  = curD.d;
+    const ds = (Math.floor(d / 60) ? Math.floor(d / 60) + 'h ' : '') + (d % 60 ? (d % 60) + 'min' : '');
+    res.textContent = '✗ Not quite. Add ' + ds.trim() + ' to ' + fmtM(curD.s) + ' → ' + fmtM(ans);
+    res.className   = 'dur-result no';
   }
 }
 
-// ══════════════════════════════════════════════════════════════════════
-//  PRACTICE
-// ══════════════════════════════════════════════════════════════════════
-const QS=[
-  {q:'How many seconds are in 3 minutes?',a:'180',o:['30','60','180','300'],e:'3 × 60 = 180 seconds'},
-  {q:'Train leaves 10:45 AM, arrives 1:15 PM. Journey time?',a:'2 h 30 min',o:['1 h 30 min','2 h 30 min','2 h 45 min','3 h'],e:'10:45 → 1:15 = 2 h 30 min'},
-  {q:'How many minutes in 2½ hours?',a:'150',o:['120','150','140','250'],e:'2 × 60 + 30 = 150 min'},
-  {q:'Film starts 7:20 PM, lasts 1 h 55 min. End time?',a:'9:15 PM',o:['8:55 PM','9:15 PM','9:25 PM','8:25 PM'],e:'7:20 PM + 1h 55min = 9:15 PM'},
-  {q:'How many hours in 3 days?',a:'72',o:['24','48','72','36'],e:'3 × 24 = 72 hours'},
-  {q:'Convert 135 minutes to hours and minutes.',a:'2 h 15 min',o:['1 h 35 min','2 h 15 min','2 h 35 min','1 h 15 min'],e:'135 ÷ 60 = 2 h 15 min'},
-  {q:'School 8:30 AM → 3:00 PM. How long?',a:'6 h 30 min',o:['5 h 30 min','6 h','6 h 30 min','7 h'],e:'8:30 AM → 3:00 PM = 6 h 30 min'},
+// ─── Practice ────────────────────────────────────────────────────────────────
+
+const QS = [
+  {q:'How many seconds are in 3 minutes?',          a:'180',       o:['30','60','180','300'],          e:'3 × 60 = 180 seconds'},
+  {q:'Train leaves 10:45 AM, arrives 1:15 PM. Journey time?', a:'2 h 30 min', o:['1 h 30 min','2 h 30 min','2 h 45 min','3 h'], e:'10:45 → 1:15 = 2 h 30 min'},
+  {q:'How many minutes in 2½ hours?',               a:'150',       o:['120','150','140','250'],         e:'2 × 60 + 30 = 150 min'},
+  {q:'Film starts 7:20 PM, lasts 1 h 55 min. End time?', a:'9:15 PM', o:['8:55 PM','9:15 PM','9:25 PM','8:25 PM'], e:'7:20 PM + 1h 55min = 9:15 PM'},
+  {q:'How many hours in 3 days?',                   a:'72',        o:['24','48','72','36'],             e:'3 × 24 = 72 hours'},
+  {q:'Convert 135 minutes to hours and minutes.',   a:'2 h 15 min',o:['1 h 35 min','2 h 15 min','2 h 35 min','1 h 15 min'], e:'135 ÷ 60 = 2 h 15 min'},
+  {q:'School 8:30 AM → 3:00 PM. How long?',         a:'6 h 30 min',o:['5 h 30 min','6 h','6 h 30 min','7 h'], e:'8:30 AM → 3:00 PM = 6 h 30 min'},
 ];
-let pqUsed=[];
-function nextPQ(){
-  if(pqUsed.length>=QS.length) pqUsed=[];
-  let i; do{ i=Math.floor(Math.random()*QS.length); }while(pqUsed.includes(i));
+let pqUsed = [];
+
+function nextPQ() {
+  if (pqUsed.length >= QS.length) pqUsed = [];
+  let i;
+  do { i = Math.floor(Math.random() * QS.length); } while (pqUsed.includes(i));
   pqUsed.push(i);
-  const q=QS[i];
-  document.getElementById('pq-text').textContent=q.q;
-  document.getElementById('pq-fb').textContent=''; document.getElementById('pq-fb').className='pq-fb';
-  const el=document.getElementById('pq-opts'); el.innerHTML='';
-  [...q.o].sort(()=>Math.random()-.5).forEach(o=>{
-    const b=document.createElement('button'); b.className='ans-opt'; b.textContent=o;
-    b.onclick=()=>{
-      el.querySelectorAll('.ans-opt').forEach(x=>x.onclick=null);
-      const ok=o===q.a;
-      b.classList.add(ok?'correct':'wrong');
-      if(!ok) el.querySelectorAll('.ans-opt').forEach(x=>{ if(x.textContent===q.a) x.classList.add('correct'); });
-      const fb=document.getElementById('pq-fb');
-      fb.textContent=(ok?'✓ Correct! ':'✗ Not quite. ')+q.e;
-      fb.className='pq-fb '+(ok?'ok':'no');
+  const q = QS[i];
+  document.getElementById('pq-text').textContent = q.q;
+  const fb = document.getElementById('pq-fb');
+  fb.textContent = '';
+  fb.className   = 'pq-fb';
+  const el = document.getElementById('pq-opts');
+  el.innerHTML   = '';
+  [...q.o].sort(() => Math.random() - 0.5).forEach(o => {
+    const b = document.createElement('button');
+    b.className   = 'ans-opt';
+    b.textContent = o;
+    b.onclick = () => {
+      el.querySelectorAll('.ans-opt').forEach(x => x.onclick = null);
+      const ok = o === q.a;
+      b.classList.add(ok ? 'correct' : 'wrong');
+      if (!ok) el.querySelectorAll('.ans-opt').forEach(x => {
+        if (x.textContent === q.a) x.classList.add('correct');
+      });
+      fb.textContent = (ok ? '✓ Correct! ' : '✗ Not quite. ') + q.e;
+      fb.className   = 'pq-fb ' + (ok ? 'ok' : 'no');
     };
     el.appendChild(b);
   });
 }
 
-// ══════════════════════════════════════════════════════════════════════
-//  TAB SWITCH
-// ══════════════════════════════════════════════════════════════════════
-function switchTab(t){
-  ['clock','duration','practice'].forEach(x=>
-    document.getElementById('pnl-'+x).classList.toggle('on',x===t));
-  document.querySelectorAll('.tab').forEach((b,i)=>
-    b.classList.toggle('on',['clock','duration','practice'][i]===t));
-  if(t==='practice') nextPQ();
-  if(t==='duration')  newDur();
+// ─── Tab switch ──────────────────────────────────────────────────────────────
+
+function switchTab(t) {
+  ['clock','duration','practice'].forEach(x =>
+    document.getElementById('pnl-' + x).classList.toggle('on', x === t));
+  document.querySelectorAll('.tab').forEach((b, i) =>
+    b.classList.toggle('on', ['clock','duration','practice'][i] === t));
+  if (t === 'practice') nextPQ();
+  if (t === 'duration')  newDur();
 }
 
-// ══════════════════════════════════════════════════════════════════════
-//  INIT — size clock after CSS layout is applied
-// ══════════════════════════════════════════════════════════════════════
-function init(){
-  clockResize();
-  newChall();
-  newDur();
-  nextPQ();
-}
-// Wait for fonts + layout; ResizeObserver is more reliable than setTimeout
-if(typeof ResizeObserver!=='undefined'){
-  let inited=false;
-  const ro=new ResizeObserver(()=>{ clockResize(); if(!inited){ inited=true; newChall(); newDur(); nextPQ(); } });
-  ro.observe(cvs);
-} else {
-  setTimeout(init, 80);
-}
-window.addEventListener('resize', clockResize);
+// ─── Init ────────────────────────────────────────────────────────────────────
+// Use ResizeObserver so we size the canvas after CSS layout has settled
+// (avoids the 0-width flash that breaks getBoundingClientRect on first paint).
+(function init() {
+  if (typeof ResizeObserver !== 'undefined') {
+    let ready = false;
+    const ro = new ResizeObserver(() => {
+      clockResize();
+      if (!ready) {
+        ready = true;
+        newChall();
+        newDur();
+        nextPQ();
+      }
+    });
+    ro.observe(cvs);
+  } else {
+    setTimeout(() => {
+      clockResize();
+      newChall();
+      newDur();
+      nextPQ();
+    }, 80);
+  }
+  window.addEventListener('resize', clockResize);
+})();
 </script>
 </body>
 </html>

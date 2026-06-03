@@ -15,252 +15,113 @@
   --rose:#C0392B;--rose-light:#FDECEA;
   --ink:#1B2A4A;--ink2:#4A5568;--ink3:#9AA3B2;
   --white:#FFFFFF;
-  --sans:'DM Sans',system-ui,sans-serif;
-  --mono:'DM Mono',monospace;
-  --serif:'Playfair Display',serif;
-  --radius:14px;
+  --sans:'DM Sans',system-ui,sans-serif;--mono:'DM Mono',monospace;--serif:'Playfair Display',serif;--radius:14px;
 }
 html,body{width:100%;min-height:100vh;background:var(--cream);color:var(--ink);font-family:var(--sans);overflow-x:hidden;-webkit-tap-highlight-color:transparent}
-
-/* ── HEADER ── */
-.hdr{
-  background:var(--navy);padding:0 24px;display:flex;align-items:center;gap:14px;
-  height:56px;border-bottom:3px solid var(--navy2);position:sticky;top:0;z-index:100;
-  box-shadow:0 2px 16px rgba(0,0,0,0.35);
-}
-.hdr-icon{width:32px;height:32px;background:rgba(201,150,58,0.2);border-radius:8px;
-  display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.hdr-text{flex:1;min-width:0}
-.hdr-title{font-family:var(--serif);font-size:18px;color:var(--gold-light);font-style:italic;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hdr{background:var(--navy);padding:0 24px;display:flex;align-items:center;gap:14px;height:56px;border-bottom:3px solid var(--navy2);position:sticky;top:0;z-index:100;box-shadow:0 2px 16px rgba(0,0,0,0.35)}
+.hdr-title{font-family:var(--serif);font-size:18px;color:var(--gold-light);font-style:italic}
 .hdr-sub{font-family:var(--mono);font-size:9px;color:rgba(245,230,200,0.45);letter-spacing:1.5px;text-transform:uppercase}
-.hdr-tabs{display:flex;background:rgba(255,255,255,0.08);border-radius:8px;padding:3px;gap:2px;flex-shrink:0}
-.tab{padding:6px 14px;font-family:var(--mono);font-size:10px;letter-spacing:.3px;
-  color:rgba(245,230,200,0.5);cursor:pointer;border-radius:6px;transition:.18s;border:none;background:none;white-space:nowrap}
+.hdr-tabs{display:flex;background:rgba(255,255,255,0.08);border-radius:8px;padding:3px;gap:2px;margin-left:auto;flex-shrink:0}
+.tab{padding:6px 14px;font-family:var(--mono);font-size:10px;letter-spacing:.3px;color:rgba(245,230,200,0.5);cursor:pointer;border-radius:6px;transition:.18s;border:none;background:none;white-space:nowrap}
 .tab.on{background:var(--cream);color:var(--navy);font-weight:600}
 .tab:hover:not(.on){color:rgba(245,230,200,0.85)}
-
-/* ── PAGE LAYOUT ── */
-.main{max-width:1060px;margin:0 auto;padding:24px 20px 60px}
+.main{max-width:960px;margin:0 auto;padding:24px 20px 60px}
 .pnl{display:none}.pnl.on{display:block}
-
-/* Desktop: two-column grid. Left = interactive tool. Right = challenge/info panel. */
 .desk-grid{display:grid;grid-template-columns:420px 1fr;gap:20px;align-items:start}
-/* Full-width panel (practice tab uses full width) */
-.desk-full{max-width:720px;margin:0 auto}
-
-/* ── CARDS ── */
-.card{background:var(--white);border-radius:var(--radius);
-  box-shadow:0 1px 3px rgba(27,42,74,0.07),0 4px 18px rgba(27,42,74,0.07);
-  margin-bottom:16px;overflow:hidden}
-.card-head{padding:12px 18px 0;font-family:var(--mono);font-size:9px;
-  letter-spacing:1.8px;text-transform:uppercase;color:var(--ink3)}
+.card{background:var(--white);border-radius:var(--radius);box-shadow:0 1px 3px rgba(27,42,74,0.07),0 4px 18px rgba(27,42,74,0.07);margin-bottom:16px;overflow:hidden}
+.card-head{padding:12px 18px 0;font-family:var(--mono);font-size:9px;letter-spacing:1.8px;text-transform:uppercase;color:var(--ink3)}
 .card-body{padding:14px 18px 18px}
-
-/* ── CONCEPT BANNER ── */
-.concept{background:var(--navy);border-radius:var(--radius);padding:16px 20px;margin-bottom:16px;
-  display:flex;gap:14px;align-items:flex-start}
-.concept-icon{font-size:30px;flex-shrink:0;line-height:1.1}
-.concept-title{font-family:var(--mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;
-  color:rgba(245,230,200,0.45);margin-bottom:4px}
-.concept-text{font-family:var(--serif);font-style:italic;font-size:14px;color:var(--gold-light);line-height:1.7}
-.concept-text strong{font-style:normal;color:var(--gold)}
-
-/* ── CLOCK ── */
+/* CLOCK */
 .clock-outer{display:flex;flex-direction:column;align-items:center;padding:20px 20px 0}
-#clock-canvas{
-  display:block;border-radius:50%;touch-action:none;cursor:crosshair;
-  width:min(280px,calc(100vw - 60px));
-  height:min(280px,calc(100vw - 60px));
-}
-
+#clock-canvas{display:block;border-radius:50%;touch-action:none;cursor:crosshair;width:min(280px,calc(100vw - 60px));height:min(280px,calc(100vw - 60px))}
 .hand-row{display:flex;gap:8px;justify-content:center;padding:14px 16px 0}
-.hand-btn{
-  display:flex;align-items:center;gap:6px;padding:9px 20px;
-  border-radius:30px;font-family:var(--mono);font-size:11px;font-weight:600;
-  border:2px solid transparent;cursor:pointer;transition:.16s;
-  letter-spacing:.3px;user-select:none;-webkit-user-select:none;
-}
+.hand-btn{display:flex;align-items:center;gap:6px;padding:9px 20px;border-radius:30px;font-family:var(--mono);font-size:11px;font-weight:600;border:2px solid transparent;cursor:pointer;transition:.16s;letter-spacing:.3px;user-select:none}
 .hand-btn-h{background:var(--cream2);border-color:var(--cream3);color:var(--ink2)}
 .hand-btn-m{background:var(--cream2);border-color:var(--cream3);color:var(--ink2)}
 .hand-btn-h.active{background:var(--navy);border-color:var(--navy2);color:var(--white)}
 .hand-btn-m.active{background:var(--rose);border-color:var(--rose);color:var(--white)}
 .hb-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;transition:.16s}
-.hand-btn-h .hb-dot{background:var(--navy)}
-.hand-btn-h.active .hb-dot{background:rgba(255,255,255,0.7)}
-.hand-btn-m .hb-dot{background:var(--rose)}
-.hand-btn-m.active .hb-dot{background:rgba(255,255,255,0.7)}
-
+.hand-btn-h .hb-dot{background:var(--navy)}.hand-btn-h.active .hb-dot{background:rgba(255,255,255,0.7)}
+.hand-btn-m .hb-dot{background:var(--rose)}.hand-btn-m.active .hb-dot{background:rgba(255,255,255,0.7)}
 .time-row{display:flex;align-items:baseline;justify-content:center;gap:6px;padding:10px 16px 0}
 .time-dig{font-family:var(--mono);font-size:52px;font-weight:600;color:var(--navy);line-height:1}
 .time-ap{font-family:var(--mono);font-size:15px;font-weight:600;color:var(--ink3)}
-
 .ampm-row{display:flex;gap:8px;justify-content:center;padding:10px 16px 18px}
-.ampm-btn{
-  flex:1;max-width:100px;padding:9px;font-family:var(--mono);font-size:12px;font-weight:600;
-  border-radius:9px;cursor:pointer;transition:.16s;
-  border:2px solid var(--cream3);background:var(--cream2);color:var(--ink2);
-}
+.ampm-btn{flex:1;max-width:100px;padding:9px;font-family:var(--mono);font-size:12px;font-weight:600;border-radius:9px;cursor:pointer;transition:.16s;border:2px solid var(--cream3);background:var(--cream2);color:var(--ink2)}
 .ampm-btn.on{background:var(--navy);border-color:var(--navy);color:var(--white)}
-
-/* ── RIGHT COLUMN: CHALLENGE STACK ── */
+/* CHALLENGE */
 .chall-board{background:var(--navy);border-radius:var(--radius);padding:18px;margin-bottom:14px}
-.chall-label{font-family:var(--mono);font-size:9px;letter-spacing:1.8px;text-transform:uppercase;
-  color:rgba(245,230,200,0.45);margin-bottom:8px}
-.chall-target{
-  font-family:var(--serif);font-size:42px;color:var(--gold-light);
-  font-style:italic;line-height:1.1;margin-bottom:6px;
-}
-.chall-hint{font-family:var(--sans);font-size:13px;color:rgba(245,230,200,0.55);
-  line-height:1.6;margin-bottom:14px}
+.chall-label{font-family:var(--mono);font-size:9px;letter-spacing:1.8px;text-transform:uppercase;color:rgba(245,230,200,0.45);margin-bottom:8px}
+.chall-target{font-family:var(--serif);font-size:42px;color:var(--gold-light);font-style:italic;line-height:1.1;margin-bottom:6px}
+.chall-hint{font-family:var(--sans);font-size:13px;color:rgba(245,230,200,0.55);line-height:1.6;margin-bottom:14px}
 .chall-hint strong{color:rgba(245,230,200,0.85);font-weight:600}
 .btn-row{display:flex;gap:8px}
-.check-btn{
-  flex:1;padding:11px;background:var(--gold);color:var(--navy2);border:none;
-  border-radius:9px;font-family:var(--mono);font-size:12px;font-weight:700;
-  cursor:pointer;transition:.15s;letter-spacing:.3px;
-}
+.check-btn{flex:1;padding:11px;background:var(--gold);color:var(--navy2);border:none;border-radius:9px;font-family:var(--mono);font-size:12px;font-weight:700;cursor:pointer;transition:.15s;letter-spacing:.3px}
 .check-btn:hover{background:var(--gold2);color:var(--white)}
-.skip-btn{
-  padding:11px 16px;background:rgba(255,255,255,0.08);
-  border:1.5px solid rgba(255,255,255,0.15);border-radius:9px;
-  font-family:var(--mono);font-size:11px;font-weight:600;cursor:pointer;
-  color:rgba(245,230,200,0.55);transition:.15s;
-}
+.skip-btn{padding:11px 16px;background:rgba(255,255,255,0.08);border:1.5px solid rgba(255,255,255,0.15);border-radius:9px;font-family:var(--mono);font-size:11px;font-weight:600;cursor:pointer;color:rgba(245,230,200,0.55);transition:.15s}
 .skip-btn:hover{color:rgba(245,230,200,0.9);background:rgba(255,255,255,0.12)}
 .ch-result{margin-top:12px;font-family:var(--sans);font-size:14px;min-height:20px;line-height:1.5;font-weight:500}
 .ch-result.ok{color:#5EC99A}.ch-result.no{color:#F8A09A}
-
-/* Score strip */
-.score-strip{background:rgba(255,255,255,0.06);border-radius:10px;padding:12px 14px;
-  display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.score-strip{background:rgba(255,255,255,0.06);border-radius:10px;padding:12px 14px;display:flex;align-items:center;gap:10px;margin-bottom:14px}
 .score-val{font-family:var(--mono);font-size:22px;font-weight:600;color:var(--gold-light)}
 .score-lbl{font-family:var(--sans);font-size:12px;color:rgba(245,230,200,0.5)}
-
-/* Quick-facts card */
-.facts-card{background:var(--white);border-radius:var(--radius);
-  box-shadow:0 1px 3px rgba(27,42,74,0.07),0 4px 18px rgba(27,42,74,0.07);
-  padding:16px 18px;margin-bottom:14px}
-.facts-title{font-family:var(--mono);font-size:9px;letter-spacing:1.8px;text-transform:uppercase;
-  color:var(--ink3);margin-bottom:10px}
+.facts-card{background:var(--white);border-radius:var(--radius);box-shadow:0 1px 3px rgba(27,42,74,0.07),0 4px 18px rgba(27,42,74,0.07);padding:16px 18px;margin-bottom:14px}
+.facts-title{font-family:var(--mono);font-size:9px;letter-spacing:1.8px;text-transform:uppercase;color:var(--ink3);margin-bottom:10px}
 .fact-row{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--cream3)}
-.fact-row:last-child{border-bottom:none;padding-bottom:0}
+.fact-row:last-child{border-bottom:none}
 .fact-icon{font-size:18px;flex-shrink:0;width:26px;text-align:center}
 .fact-text{font-family:var(--sans);font-size:13px;color:var(--ink2);line-height:1.4}
 .fact-text strong{font-family:var(--mono);font-size:12px;color:var(--navy)}
-
-/* ── DURATION TAB ── */
-.dur-layout{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
-.dur-q{font-family:var(--serif);font-style:italic;font-size:16px;
-  color:var(--ink);line-height:1.65;margin-bottom:18px}
-.tl-wrap{position:relative;margin-bottom:38px}
-.tl-track{height:8px;background:var(--cream3);border-radius:4px}
-.tl-fill{height:8px;background:linear-gradient(90deg,var(--teal),var(--gold));
-  border-radius:4px;width:4%;transition:width .3s ease;position:absolute;top:0;left:0}
-.tl-marker{position:absolute;top:50%;transform:translateY(-50%);
-  display:flex;flex-direction:column;align-items:center;gap:0}
-.tl-dot{width:14px;height:14px;border-radius:50%;border:2.5px solid var(--white);
-  box-shadow:0 1px 4px rgba(0,0,0,0.2);margin-top:-3px}
-.tl-lbl{font-family:var(--mono);font-size:9px;font-weight:600;white-space:nowrap;
-  margin-top:10px;color:var(--ink2)}
-.dur-slider{width:100%;margin:8px 0 4px;accent-color:var(--navy);height:28px;cursor:pointer}
-.dur-out{font-family:var(--mono);font-size:30px;font-weight:600;
-  color:var(--navy);text-align:center;margin-bottom:16px}
-.dur-result{font-family:var(--sans);font-size:13px;min-height:20px;margin-top:8px;
-  line-height:1.5;font-weight:500}
-.dur-result.ok{color:var(--teal)}.dur-result.no{color:var(--rose)}
-
-/* Duration cheat-sheet panel */
-.dur-tip{background:var(--navy);border-radius:var(--radius);padding:18px;height:100%}
-.dur-tip-title{font-family:var(--mono);font-size:9px;letter-spacing:1.8px;text-transform:uppercase;
-  color:rgba(245,230,200,0.45);margin-bottom:12px}
-.tip-row{display:flex;align-items:center;gap:10px;padding:8px 0;
-  border-bottom:1px solid rgba(255,255,255,0.07)}
-.tip-row:last-child{border-bottom:none}
-.tip-icon{font-size:20px;width:28px;text-align:center;flex-shrink:0}
-.tip-text{font-family:var(--sans);font-size:13px;color:rgba(245,230,200,0.7);line-height:1.4}
-.tip-text strong{font-family:var(--mono);font-size:12px;color:var(--gold)}
-
-/* ── PRACTICE TAB ── */
-.pq-text{font-family:var(--serif);font-style:italic;font-size:18px;
-  color:var(--ink);line-height:1.65;margin-bottom:18px}
+/* PRACTICE: mini clock + questions */
+.prac-layout{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
+#prac-clock{display:block;border-radius:50%;width:min(200px,calc(100vw - 60px));height:min(200px,calc(100vw - 60px))}
+.pq-text{font-family:var(--serif);font-style:italic;font-size:17px;color:var(--ink);line-height:1.65;margin-bottom:16px}
 .ans-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.ans-opt{
-  padding:14px 12px;background:var(--cream2);border:2px solid var(--cream3);
-  border-radius:10px;font-family:var(--mono);font-size:13px;font-weight:600;
-  cursor:pointer;transition:.18s;color:var(--ink);text-align:center;line-height:1.3;
-}
+.ans-opt{padding:12px 10px;background:var(--cream2);border:2px solid var(--cream3);border-radius:10px;font-family:var(--mono);font-size:12px;font-weight:600;cursor:pointer;transition:.18s;color:var(--ink);text-align:center;line-height:1.3}
 .ans-opt:hover{border-color:var(--navy);background:var(--gold-light);color:var(--navy2)}
 .ans-opt.correct{background:#E8F9F0;border-color:var(--teal);color:#1A5A3A;animation:cpop .35s}
 .ans-opt.wrong{background:var(--rose-light);border-color:var(--rose);color:#7F1D1D;animation:cshk .35s}
-@keyframes cpop{0%{transform:scale(1)}50%{transform:scale(1.05)}100%{transform:scale(1)}}
-@keyframes cshk{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
 .pq-fb{min-height:20px;margin-top:14px;font-size:14px;line-height:1.5;font-weight:500}
 .pq-fb.ok{color:var(--teal)}.pq-fb.no{color:var(--rose)}
-.next-btn{
-  margin-top:16px;width:100%;background:var(--navy);color:var(--white);border:none;
-  border-radius:10px;padding:14px;font-family:var(--mono);font-size:12px;
-  font-weight:700;cursor:pointer;letter-spacing:.3px;transition:.15s;
-}
+.next-btn{margin-top:16px;width:100%;background:var(--navy);color:var(--white);border:none;border-radius:10px;padding:13px;font-family:var(--mono);font-size:12px;font-weight:700;cursor:pointer;transition:.15s}
 .next-btn:hover{background:var(--navy3)}
+.prac-clock-box{display:flex;flex-direction:column;align-items:center;gap:10px;background:var(--white);border-radius:var(--radius);padding:18px;box-shadow:0 1px 3px rgba(27,42,74,0.07),0 4px 18px rgba(27,42,74,0.07)}
+.prac-clock-time{font-family:var(--mono);font-size:24px;font-weight:700;color:var(--navy)}
+.prac-clock-label{font-family:var(--mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink3)}
 
-/* Practice layout — Q card + score sidebar */
-.prac-layout{display:grid;grid-template-columns:1fr 280px;gap:20px;align-items:start}
-.prac-score-panel{background:var(--navy);border-radius:var(--radius);padding:18px}
-.psc-title{font-family:var(--mono);font-size:9px;letter-spacing:1.8px;text-transform:uppercase;
-  color:rgba(245,230,200,0.45);margin-bottom:12px}
-.psc-big{font-family:var(--mono);font-size:48px;font-weight:600;color:var(--gold-light);line-height:1;margin-bottom:4px}
-.psc-sub{font-family:var(--sans);font-size:12px;color:rgba(245,230,200,0.45);margin-bottom:18px}
-.psc-bar-wrap{background:rgba(255,255,255,0.08);border-radius:6px;height:8px;overflow:hidden;margin-bottom:18px}
-.psc-bar{height:100%;background:linear-gradient(90deg,var(--teal),var(--gold));border-radius:6px;width:0%;transition:width .4s ease}
-.psc-streak{font-family:var(--mono);font-size:11px;color:rgba(245,230,200,0.5);margin-bottom:14px}
-.psc-streak strong{color:var(--gold)}
-.psc-hint{font-family:var(--serif);font-style:italic;font-size:12px;color:rgba(245,230,200,0.4);line-height:1.6}
+@keyframes cpop{0%{transform:scale(1)}50%{transform:scale(1.05)}100%{transform:scale(1)}}
+@keyframes cshk{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
 
 @media(max-width:760px){
   .desk-grid{grid-template-columns:1fr}
-  .dur-layout{grid-template-columns:1fr}
   .prac-layout{grid-template-columns:1fr}
-  .prac-score-panel{display:none}
-  #clock-canvas{width:min(268px,calc(100vw - 60px));height:min(268px,calc(100vw - 60px))}
+  #clock-canvas{width:min(260px,calc(100vw - 60px));height:min(260px,calc(100vw - 60px))}
   .time-dig{font-size:clamp(36px,9vw,48px)}
   .tab{padding:5px 10px;font-size:10px}
   .hdr{padding:0 14px}
 }
-@media(max-width:400px){
-  .ans-grid{grid-template-columns:1fr}
-  .hand-btn{padding:8px 12px;font-size:10px}
-}
+@media(max-width:400px){.ans-grid{grid-template-columns:1fr}.hand-btn{padding:8px 12px;font-size:10px}}
 </style>
 </head>
 <body>
-
 <div class="hdr">
-  <div class="hdr-icon">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-      <circle cx="12" cy="12" r="9" stroke="#C9963A" stroke-width="2"/>
-      <line x1="12" y1="6.5" x2="12" y2="12" stroke="#C9963A" stroke-width="2" stroke-linecap="round"/>
-      <line x1="12" y1="12" x2="16" y2="14.5" stroke="#C9963A" stroke-width="1.5" stroke-linecap="round"/>
-      <circle cx="12" cy="12" r="1.5" fill="#C9963A"/>
-    </svg>
+  <div class="hdr-icon" style="width:32px;height:32px;background:rgba(201,150,58,0.2);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#C9963A" stroke-width="2"/><line x1="12" y1="6.5" x2="12" y2="12" stroke="#C9963A" stroke-width="2" stroke-linecap="round"/><line x1="12" y1="12" x2="16" y2="14.5" stroke="#C9963A" stroke-width="1.5" stroke-linecap="round"/><circle cx="12" cy="12" r="1.5" fill="#C9963A"/></svg>
   </div>
-  <div class="hdr-text">
+  <div>
     <div class="hdr-title">Time Detective</div>
     <div class="hdr-sub">Ch. 13 · Telling Time</div>
   </div>
   <div class="hdr-tabs">
     <button class="tab on" onclick="switchTab('clock')">Clock</button>
-    <button class="tab" onclick="switchTab('duration')">Duration</button>
     <button class="tab" onclick="switchTab('practice')">Practice</button>
   </div>
 </div>
-
 <div class="main">
 
-<!-- ══ CLOCK TAB ══ -->
+<!-- CLOCK TAB -->
 <div class="pnl on" id="pnl-clock">
   <div class="desk-grid">
-
-    <!-- LEFT: clock card -->
     <div>
       <div class="card">
         <div class="card-head">Interactive clock</div>
@@ -268,25 +129,16 @@ html,body{width:100%;min-height:100vh;background:var(--cream);color:var(--ink);f
           <canvas id="clock-canvas"></canvas>
         </div>
         <div class="hand-row">
-          <button class="hand-btn hand-btn-h active" id="btn-h" onclick="setMode('hour')">
-            <span class="hb-dot"></span>Hour hand
-          </button>
-          <button class="hand-btn hand-btn-m" id="btn-m" onclick="setMode('minute')">
-            <span class="hb-dot"></span>Minute hand
-          </button>
+          <button class="hand-btn hand-btn-h active" id="btn-h" onclick="setMode('hour')"><span class="hb-dot"></span>Hour hand</button>
+          <button class="hand-btn hand-btn-m" id="btn-m" onclick="setMode('minute')"><span class="hb-dot"></span>Minute hand</button>
         </div>
-        <div class="time-row">
-          <div class="time-dig" id="t-dig">12:00</div>
-          <div class="time-ap" id="t-ap">PM</div>
-        </div>
+        <div class="time-row"><div class="time-dig" id="t-dig">12:00</div><div class="time-ap" id="t-ap">PM</div></div>
         <div class="ampm-row">
           <button class="ampm-btn" id="am-btn" onclick="setAP('AM')">AM</button>
           <button class="ampm-btn on" id="pm-btn" onclick="setAP('PM')">PM</button>
         </div>
       </div>
     </div>
-
-    <!-- RIGHT: challenge + facts -->
     <div>
       <div class="chall-board">
         <div class="chall-label">Challenge</div>
@@ -295,116 +147,34 @@ html,body{width:100%;min-height:100vh;background:var(--cream);color:var(--ink);f
           <div class="score-val" id="clock-score">0</div>
           <div class="score-lbl">correct so far</div>
         </div>
-        <div class="chall-hint">
-          Select <strong>Hour hand</strong> or <strong>Minute hand</strong>, then drag on the clock face to set the time. Toggle AM / PM when needed.
-        </div>
+        <div class="chall-hint">Select <strong>Hour hand</strong> or <strong>Minute hand</strong>, drag on the clock face to set the time. Toggle AM / PM when needed.</div>
         <div class="btn-row">
           <button class="check-btn" onclick="checkChall()">✓ Check answer</button>
           <button class="skip-btn" onclick="newChall()">Skip →</button>
         </div>
         <div class="ch-result" id="ch-result"></div>
       </div>
-
-      <!-- Quick-reference facts panel -->
       <div class="facts-card">
         <div class="facts-title">Quick reference</div>
-        <div class="fact-row">
-          <div class="fact-icon">⏱️</div>
-          <div class="fact-text"><strong>60 seconds</strong> = 1 minute</div>
-        </div>
-        <div class="fact-row">
-          <div class="fact-icon">🕐</div>
-          <div class="fact-text"><strong>60 minutes</strong> = 1 hour</div>
-        </div>
-        <div class="fact-row">
-          <div class="fact-icon">🌅</div>
-          <div class="fact-text"><strong>AM</strong> = midnight → noon · <strong>PM</strong> = noon → midnight</div>
-        </div>
-        <div class="fact-row">
-          <div class="fact-icon">🔵</div>
-          <div class="fact-text">Short dark hand = <strong>hours</strong></div>
-        </div>
-        <div class="fact-row">
-          <div class="fact-icon">🔴</div>
-          <div class="fact-text">Long red hand = <strong>minutes</strong></div>
-        </div>
+        <div class="fact-row"><div class="fact-icon">⏱️</div><div class="fact-text"><strong>60 seconds</strong> = 1 minute</div></div>
+        <div class="fact-row"><div class="fact-icon">🕐</div><div class="fact-text"><strong>60 minutes</strong> = 1 hour</div></div>
+        <div class="fact-row"><div class="fact-icon">🌅</div><div class="fact-text"><strong>AM</strong> = midnight → noon · <strong>PM</strong> = noon → midnight</div></div>
+        <div class="fact-row"><div class="fact-icon">🔵</div><div class="fact-text">Short dark hand = <strong>hours</strong></div></div>
+        <div class="fact-row"><div class="fact-icon">🔴</div><div class="fact-text">Long red hand = <strong>minutes</strong></div></div>
       </div>
     </div>
-
   </div>
 </div>
 
-<!-- ══ DURATION TAB ══ -->
-<div class="pnl" id="pnl-duration">
-  <div class="dur-layout">
-
-    <!-- LEFT: question + slider -->
-    <div class="card">
-      <div class="card-head">Calculate duration</div>
-      <div class="card-body">
-        <div class="dur-q" id="dur-q">Loading…</div>
-        <div class="tl-wrap">
-          <div class="tl-track">
-            <div class="tl-fill" id="tl-fill"></div>
-          </div>
-          <div class="tl-marker" id="tl-s" style="left:4%">
-            <div class="tl-dot" style="background:var(--teal)"></div>
-            <div class="tl-lbl" id="tl-s-lbl" style="color:var(--teal)">Start</div>
-          </div>
-          <div class="tl-marker" id="tl-e" style="left:50%">
-            <div class="tl-dot" style="background:var(--rose)"></div>
-            <div class="tl-lbl" id="tl-e-lbl" style="color:var(--rose)">End?</div>
-          </div>
-        </div>
-        <input type="range" class="dur-slider" id="dur-sl" min="0" max="1440" value="720" step="5"/>
-        <div class="dur-out" id="dur-out">12:00 PM</div>
-        <div class="btn-row">
-          <button class="check-btn" style="background:var(--navy);color:#fff" onclick="checkDur()">✓ Check</button>
-          <button class="skip-btn" style="background:var(--cream2);border-color:var(--cream3);color:var(--ink2)" onclick="newDur()">Next →</button>
-        </div>
-        <div class="dur-result" id="dur-res"></div>
-      </div>
-    </div>
-
-    <!-- RIGHT: tips panel -->
-    <div class="dur-tip">
-      <div class="dur-tip-title">How to calculate duration</div>
-      <div class="tip-row">
-        <div class="tip-icon">1️⃣</div>
-        <div class="tip-text">Find the <strong>start time</strong> on the timeline</div>
-      </div>
-      <div class="tip-row">
-        <div class="tip-icon">2️⃣</div>
-        <div class="tip-text">Add the <strong>duration in minutes</strong> to the start</div>
-      </div>
-      <div class="tip-row">
-        <div class="tip-icon">3️⃣</div>
-        <div class="tip-text">If minutes exceed 60, carry over to the next hour</div>
-      </div>
-      <div class="tip-row">
-        <div class="tip-icon">🌅</div>
-        <div class="tip-text">Watch for AM → PM crossover at <strong>12:00 noon</strong></div>
-      </div>
-      <div class="tip-row">
-        <div class="tip-icon">📐</div>
-        <div class="tip-text">Formula: <strong>End = Start + Duration</strong></div>
-      </div>
-      <div class="tip-row">
-        <div class="tip-icon">💡</div>
-        <div class="tip-text">Example: 2:45 PM + 30 min = <strong>3:15 PM</strong></div>
-      </div>
-    </div>
-
-  </div>
-</div>
-
-<!-- ══ PRACTICE TAB ══ -->
+<!-- PRACTICE TAB: mini clock shows a time, questions about it -->
 <div class="pnl" id="pnl-practice">
   <div class="prac-layout">
-
-    <!-- LEFT: question -->
+    <div class="prac-clock-box">
+      <div class="prac-clock-label">What time does this clock show?</div>
+      <canvas id="prac-clock" width="200" height="200"></canvas>
+      <div class="prac-clock-time" id="prac-time-disp">12:00 PM</div>
+    </div>
     <div class="card">
-      <div class="card-head">Quick fire practice</div>
       <div class="card-body">
         <div class="pq-text" id="pq-text">Loading…</div>
         <div class="ans-grid" id="pq-opts"></div>
@@ -412,327 +182,118 @@ html,body{width:100%;min-height:100vh;background:var(--cream);color:var(--ink);f
         <button class="next-btn" onclick="nextPQ()">Next question →</button>
       </div>
     </div>
-
-    <!-- RIGHT: score panel -->
-    <div class="prac-score-panel">
-      <div class="psc-title">Your score</div>
-      <div class="psc-big" id="psc-correct">0</div>
-      <div class="psc-sub">correct answers</div>
-      <div class="psc-bar-wrap"><div class="psc-bar" id="psc-bar"></div></div>
-      <div class="psc-streak" id="psc-streak">Answer a question to start!</div>
-      <div class="psc-hint">Every question tests a different time concept — clocks, duration, conversions.</div>
-    </div>
-
   </div>
 </div>
 
-</div><!-- /main -->
-
+</div>
 <script>
-// ── CLOCK ─────────────────────────────────────────────────────────────────────
-const cvs = document.getElementById('clock-canvas');
-const ctx  = cvs.getContext('2d');
-
-const C = {
-  h:12, m:0, ap:'PM', mode:'hour', drag:false,
-  cssSize:280, cx:140, cy:140, r:137, dpr:1,
-};
-
+// ── CLOCK ENGINE (shared) ─────────────────────────────────────────────────────
+const cvs=document.getElementById('clock-canvas');
+const ctx=cvs.getContext('2d');
+const C={h:12,m:0,ap:'PM',mode:'hour',drag:false,cssSize:280,cx:140,cy:140,r:137,dpr:1};
 function clockResize(){
-  C.dpr = Math.min(window.devicePixelRatio||1, 3);
-  const rect = cvs.getBoundingClientRect();
-  C.cssSize = rect.width > 0 ? rect.width : 280;
-  cvs.width  = Math.round(C.cssSize * C.dpr);
-  cvs.height = Math.round(C.cssSize * C.dpr);
-  ctx.setTransform(C.dpr,0,0,C.dpr,0,0);
-  C.cx = C.cy = C.cssSize/2;
-  C.r  = C.cssSize/2 - 3;
-  clockDraw();
+  C.dpr=Math.min(window.devicePixelRatio||1,3);
+  const rect=cvs.getBoundingClientRect();C.cssSize=rect.width>0?rect.width:280;
+  cvs.width=Math.round(C.cssSize*C.dpr);cvs.height=Math.round(C.cssSize*C.dpr);
+  ctx.setTransform(C.dpr,0,0,C.dpr,0,0);C.cx=C.cy=C.cssSize/2;C.r=C.cssSize/2-3;clockDraw();
 }
-
-function clockPt(e){
-  const rc = cvs.getBoundingClientRect();
-  const src = e.touches ? e.touches[0] : e;
-  return {x: src.clientX - rc.left, y: src.clientY - rc.top};
-}
-
-function handAngles(){
-  const ha = (C.h%12 + C.m/60)*(Math.PI*2/12) - Math.PI/2;
-  const ma = C.m*(Math.PI*2/60) - Math.PI/2;
-  return {ha, ma};
-}
-
+function clockPt(e){const rc=cvs.getBoundingClientRect();const src=e.touches?e.touches[0]:e;return{x:src.clientX-rc.left,y:src.clientY-rc.top}}
+function handAngles(){const ha=(C.h%12+C.m/60)*(Math.PI*2/12)-Math.PI/2;const ma=C.m*(Math.PI*2/60)-Math.PI/2;return{ha,ma}}
 function clockDraw(){
-  const {cx,cy,r,cssSize} = C;
-  ctx.clearRect(0,0,cssSize,cssSize);
-  ctx.beginPath(); ctx.arc(cx,cy,r,0,Math.PI*2);
-  ctx.fillStyle = '#F9F4E8'; ctx.fill();
-  ctx.strokeStyle = '#1B2A4A'; ctx.lineWidth = 5; ctx.stroke();
-
-  for(let i=0;i<60;i++){
-    const a = i*(Math.PI*2/60)-Math.PI/2;
-    const maj = i%5===0;
-    ctx.strokeStyle = maj ? '#1B2A4A' : 'rgba(27,42,74,0.2)';
-    ctx.lineWidth = maj ? 2.5 : 1;
-    ctx.beginPath();
-    ctx.moveTo(cx+Math.cos(a)*(r-(maj?2:1)), cy+Math.sin(a)*(r-(maj?2:1)));
-    ctx.lineTo(cx+Math.cos(a)*(r-(maj?18:9)), cy+Math.sin(a)*(r-(maj?18:9)));
-    ctx.stroke();
-  }
-
-  const fs = Math.max(10, Math.round(r*0.115));
-  ctx.font = `600 ${fs}px "DM Mono",monospace`;
-  ctx.fillStyle = '#1B2A4A'; ctx.textAlign='center'; ctx.textBaseline='middle';
-  [12,1,2,3,4,5,6,7,8,9,10,11].forEach((n,i)=>{
-    const a = i*(Math.PI*2/12)-Math.PI/2;
-    ctx.fillText(n, cx+Math.cos(a)*(r-32), cy+Math.sin(a)*(r-32));
-  });
-
-  const {ha,ma} = handAngles();
-  const hLen=r*0.52, mLen=r*0.73;
-  const hourActive = C.mode==='hour';
-  if(hourActive){drawHand(ma,mLen,'minute',false);drawHand(ha,hLen,'hour',true);}
-  else{drawHand(ha,hLen,'hour',false);drawHand(ma,mLen,'minute',true);}
-
-  const ga=hourActive?ha:ma, gl=hourActive?hLen:mLen;
-  const tx=cx+Math.cos(ga)*gl, ty=cy+Math.sin(ga)*gl;
-  ctx.beginPath(); ctx.arc(tx,ty,Math.round(r*0.1),0,Math.PI*2);
-  ctx.strokeStyle=hourActive?'rgba(27,42,74,0.35)':'rgba(192,57,43,0.45)';
-  ctx.lineWidth=2; ctx.setLineDash([3,3]); ctx.stroke(); ctx.setLineDash([]);
-
-  ctx.beginPath(); ctx.arc(cx,cy,Math.round(r*0.06),0,Math.PI*2);
-  ctx.fillStyle='#1B2A4A'; ctx.fill();
-  ctx.beginPath(); ctx.arc(cx,cy,Math.round(r*0.03),0,Math.PI*2);
-  ctx.fillStyle='#C9963A'; ctx.fill();
-
-  const hd = C.h===0?12:C.h>12?C.h-12:C.h;
-  document.getElementById('t-dig').textContent = hd+':'+String(C.m).padStart(2,'0');
-  document.getElementById('t-ap').textContent  = C.ap;
+  const{cx,cy,r,cssSize}=C;ctx.clearRect(0,0,cssSize,cssSize);
+  ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.fillStyle='#F9F4E8';ctx.fill();ctx.strokeStyle='#1B2A4A';ctx.lineWidth=5;ctx.stroke();
+  for(let i=0;i<60;i++){const a=i*(Math.PI*2/60)-Math.PI/2;const maj=i%5===0;ctx.strokeStyle=maj?'#1B2A4A':'rgba(27,42,74,0.2)';ctx.lineWidth=maj?2.5:1;ctx.beginPath();ctx.moveTo(cx+Math.cos(a)*(r-(maj?2:1)),cy+Math.sin(a)*(r-(maj?2:1)));ctx.lineTo(cx+Math.cos(a)*(r-(maj?18:9)),cy+Math.sin(a)*(r-(maj?18:9)));ctx.stroke()}
+  const fs=Math.max(10,Math.round(r*0.115));ctx.font=`600 ${fs}px "DM Mono",monospace`;ctx.fillStyle='#1B2A4A';ctx.textAlign='center';ctx.textBaseline='middle';
+  [12,1,2,3,4,5,6,7,8,9,10,11].forEach((n,i)=>{const a=i*(Math.PI*2/12)-Math.PI/2;ctx.fillText(n,cx+Math.cos(a)*(r-32),cy+Math.sin(a)*(r-32))});
+  const{ha,ma}=handAngles();const hLen=r*0.52,mLen=r*0.73;const hourActive=C.mode==='hour';
+  if(hourActive){drawHand(ctx,cx,cy,r,ma,mLen,'minute',false);drawHand(ctx,cx,cy,r,ha,hLen,'hour',true)}
+  else{drawHand(ctx,cx,cy,r,ha,hLen,'hour',false);drawHand(ctx,cx,cy,r,ma,mLen,'minute',true)}
+  ctx.beginPath();ctx.arc(cx,cy,Math.round(r*0.06),0,Math.PI*2);ctx.fillStyle='#1B2A4A';ctx.fill();
+  ctx.beginPath();ctx.arc(cx,cy,Math.round(r*0.03),0,Math.PI*2);ctx.fillStyle='#C9963A';ctx.fill();
+  const hd=C.h===0?12:C.h>12?C.h-12:C.h;
+  document.getElementById('t-dig').textContent=hd+':'+String(C.m).padStart(2,'0');
+  document.getElementById('t-ap').textContent=C.ap;
 }
-
-function drawHand(angle,len,type,active){
-  const {cx,cy,r}=C;
-  const tail=len*0.2;
-  const tx=cx+Math.cos(angle)*len, ty=cy+Math.sin(angle)*len;
-  const bx=cx-Math.cos(angle)*tail, by=cy-Math.sin(angle)*tail;
-  const isH=type==='hour';
-  const thick=isH?(active?Math.round(r*0.07):Math.round(r*0.05)):(active?Math.round(r*0.048):Math.round(r*0.034));
+function drawHand(ctx,cx,cy,r,angle,len,type,active){
+  const tail=len*0.2;const tx=cx+Math.cos(angle)*len,ty=cy+Math.sin(angle)*len;const bx=cx-Math.cos(angle)*tail,by=cy-Math.sin(angle)*tail;
+  const isH=type==='hour';const thick=isH?(active?Math.round(r*0.07):Math.round(r*0.05)):(active?Math.round(r*0.048):Math.round(r*0.034));
   const col=isH?(active?'#1B2A4A':'rgba(27,42,74,0.28)'):(active?'#C0392B':'rgba(192,57,43,0.3)');
-  ctx.strokeStyle=col; ctx.lineWidth=thick; ctx.lineCap='round';
-  ctx.beginPath(); ctx.moveTo(bx,by); ctx.lineTo(tx,ty); ctx.stroke();
-  const tipR=active?Math.round(r*0.056):Math.round(r*0.04);
-  ctx.beginPath(); ctx.arc(tx,ty,tipR,0,Math.PI*2);
-  ctx.fillStyle=col; ctx.fill();
-  if(active){ctx.strokeStyle='rgba(255,255,255,0.65)';ctx.lineWidth=1.5;ctx.stroke();}
+  ctx.strokeStyle=col;ctx.lineWidth=thick;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(bx,by);ctx.lineTo(tx,ty);ctx.stroke();
+  const tipR=active?Math.round(r*0.056):Math.round(r*0.04);ctx.beginPath();ctx.arc(tx,ty,tipR,0,Math.PI*2);ctx.fillStyle=col;ctx.fill();
+  if(active){ctx.strokeStyle='rgba(255,255,255,0.65)';ctx.lineWidth=1.5;ctx.stroke()}
 }
-
-function onDragStart(e){e.preventDefault();C.drag=true;handleAngle(e);}
-function onDragEnd(){C.drag=false;}
-function onDragMove(e){if(!C.drag)return;e.preventDefault();handleAngle(e);}
-
+cvs.addEventListener('mousedown',e=>{C.drag=true;handleAngle(e)});
+window.addEventListener('mouseup',()=>C.drag=false);
+cvs.addEventListener('mousemove',e=>{if(!C.drag)return;e.preventDefault();handleAngle(e)});
+cvs.addEventListener('touchstart',e=>{e.preventDefault();C.drag=true;handleAngle(e)},{passive:false});
+window.addEventListener('touchmove',e=>{if(!C.drag)return;e.preventDefault();handleAngle(e)},{passive:false});
+window.addEventListener('touchend',()=>C.drag=false);
 function handleAngle(e){
-  const p=clockPt(e);
-  const raw=Math.atan2(p.y-C.cy, p.x-C.cx);
-  const norm=((raw+Math.PI/2)%(Math.PI*2)+Math.PI*2)%(Math.PI*2);
-  if(C.mode==='minute'){
-    C.m=Math.round(norm/(Math.PI*2)*60)%60;
-  } else {
-    const h12=Math.round(norm/(Math.PI*2)*12)%12;
-    C.h=C.ap==='AM'?(h12===0?0:h12):(h12===0?12:h12+12);
-  }
+  const p=clockPt(e);const raw=Math.atan2(p.y-C.cy,p.x-C.cx);const norm=((raw+Math.PI/2)%(Math.PI*2)+Math.PI*2)%(Math.PI*2);
+  if(C.mode==='minute'){C.m=Math.round(norm/(Math.PI*2)*60)%60}
+  else{const h12=Math.round(norm/(Math.PI*2)*12)%12;C.h=C.ap==='AM'?(h12===0?0:h12):(h12===0?12:h12+12)}
   clockDraw();
 }
+function setMode(m){C.mode=m;document.getElementById('btn-h').classList.toggle('active',m==='hour');document.getElementById('btn-m').classList.toggle('active',m==='minute');clockDraw()}
+function setAP(ap){C.ap=ap;if(ap==='AM'&&C.h>=12)C.h-=12;if(ap==='PM'&&C.h<12)C.h+=12;document.getElementById('am-btn').classList.toggle('on',ap==='AM');document.getElementById('pm-btn').classList.toggle('on',ap==='PM');clockDraw()}
+// challenges
+const CHALLS=[{h:3,m:45,ap:'PM'},{h:7,m:30,ap:'AM'},{h:12,m:0,ap:'PM'},{h:9,m:15,ap:'AM'},{h:6,m:0,ap:'PM'},{h:2,m:50,ap:'PM'},{h:11,m:30,ap:'AM'},{h:4,m:20,ap:'PM'},{h:8,m:0,ap:'AM'},{h:1,m:15,ap:'PM'},{h:10,m:45,ap:'AM'},{h:5,m:30,ap:'PM'}];
+let curC=null,cUsed=[],clockCorrect=0;
+function fmt12(h,m,ap){const hd=h===0?12:h>12?h-12:h;return hd+':'+String(m).padStart(2,'0')+' '+ap}
+function newChall(){if(cUsed.length>=CHALLS.length)cUsed=[];let i;do{i=Math.floor(Math.random()*CHALLS.length)}while(cUsed.includes(i));cUsed.push(i);curC=CHALLS[i];document.getElementById('ch-target').textContent=fmt12(curC.h,curC.m,curC.ap);const r=document.getElementById('ch-result');r.textContent='';r.className='ch-result'}
+function checkChall(){if(!curC)return;let tH=curC.h;if(curC.ap==='PM'&&curC.h!==12)tH=curC.h+12;if(curC.ap==='AM'&&curC.h===12)tH=0;const okAP=C.ap===curC.ap,okH=C.h===tH,md=Math.min(Math.abs(C.m-curC.m),60-Math.abs(C.m-curC.m)),okM=md<=2;const r=document.getElementById('ch-result');if(okAP&&okH&&okM){clockCorrect++;document.getElementById('clock-score').textContent=clockCorrect;r.textContent='✓ Correct! '+fmt12(curC.h,curC.m,curC.ap)+' — well done!';r.className='ch-result ok';setTimeout(newChall,1600)}else{let msg='Not quite. ';if(!okAP)msg+='Check AM / PM.';else if(!okH)msg+='Move the short dark hand to the correct hour.';else msg+='Move the long red hand to the correct minute.';r.textContent=msg;r.className='ch-result no'}}
 
-cvs.addEventListener('mousedown',onDragStart);
-window.addEventListener('mousemove',onDragMove);
-window.addEventListener('mouseup',onDragEnd);
-cvs.addEventListener('touchstart',onDragStart,{passive:false});
-window.addEventListener('touchmove',onDragMove,{passive:false});
-window.addEventListener('touchend',onDragEnd);
-
-function setMode(m){
-  C.mode=m;
-  document.getElementById('btn-h').classList.toggle('active',m==='hour');
-  document.getElementById('btn-m').classList.toggle('active',m==='minute');
-  clockDraw();
+// ── PRACTICE: mini clock + questions ─────────────────────────────────────────
+const pracCvs=document.getElementById('prac-clock');
+const pracCtx=pracCvs.getContext('2d');
+let pracH=3,pracM=0,pracAP='PM';
+function drawPracClock(h,m){
+  const W=200,cx=100,cy=100,r=96;
+  pracCtx.clearRect(0,0,W,W);
+  pracCtx.beginPath();pracCtx.arc(cx,cy,r,0,Math.PI*2);pracCtx.fillStyle='#F9F4E8';pracCtx.fill();pracCtx.strokeStyle='#1B2A4A';pracCtx.lineWidth=4;pracCtx.stroke();
+  for(let i=0;i<60;i++){const a=i*(Math.PI*2/60)-Math.PI/2;const maj=i%5===0;pracCtx.strokeStyle=maj?'#1B2A4A':'rgba(27,42,74,0.2)';pracCtx.lineWidth=maj?2:1;pracCtx.beginPath();pracCtx.moveTo(cx+Math.cos(a)*(r-1),cy+Math.sin(a)*(r-1));pracCtx.lineTo(cx+Math.cos(a)*(r-(maj?14:7)),cy+Math.sin(a)*(r-(maj?14:7)));pracCtx.stroke()}
+  pracCtx.font='bold 12px "DM Mono",monospace';pracCtx.fillStyle='#1B2A4A';pracCtx.textAlign='center';pracCtx.textBaseline='middle';
+  [12,1,2,3,4,5,6,7,8,9,10,11].forEach((n,i)=>{const a=i*(Math.PI*2/12)-Math.PI/2;pracCtx.fillText(n,cx+Math.cos(a)*(r-26),cy+Math.sin(a)*(r-26))});
+  // hour hand
+  const ha=(h%12+m/60)*(Math.PI*2/12)-Math.PI/2;
+  pracCtx.strokeStyle='#1B2A4A';pracCtx.lineWidth=6;pracCtx.lineCap='round';
+  pracCtx.beginPath();pracCtx.moveTo(cx-Math.cos(ha)*14,cy-Math.sin(ha)*14);pracCtx.lineTo(cx+Math.cos(ha)*50,cy+Math.sin(ha)*50);pracCtx.stroke();
+  // minute hand
+  const ma=m*(Math.PI*2/60)-Math.PI/2;
+  pracCtx.strokeStyle='#C0392B';pracCtx.lineWidth=4;
+  pracCtx.beginPath();pracCtx.moveTo(cx-Math.cos(ma)*16,cy-Math.sin(ma)*16);pracCtx.lineTo(cx+Math.cos(ma)*74,cy+Math.sin(ma)*74);pracCtx.stroke();
+  pracCtx.beginPath();pracCtx.arc(cx,cy,5,0,Math.PI*2);pracCtx.fillStyle='#1B2A4A';pracCtx.fill();
 }
-function setAP(ap){
-  C.ap=ap;
-  if(ap==='AM'&&C.h>=12)C.h-=12;
-  if(ap==='PM'&&C.h<12)C.h+=12;
-  document.getElementById('am-btn').classList.toggle('on',ap==='AM');
-  document.getElementById('pm-btn').classList.toggle('on',ap==='PM');
-  clockDraw();
-}
-
-// ── Challenges ────────────────────────────────────────────────────────────────
-const CHALLS=[
-  {h:3,m:45,ap:'PM'},{h:7,m:30,ap:'AM'},{h:12,m:0,ap:'PM'},{h:9,m:15,ap:'AM'},
-  {h:6,m:0,ap:'PM'},{h:2,m:50,ap:'PM'},{h:11,m:30,ap:'AM'},{h:4,m:20,ap:'PM'},
-  {h:8,m:0,ap:'AM'},{h:1,m:15,ap:'PM'},{h:10,m:45,ap:'AM'},{h:5,m:30,ap:'PM'},
+const PRAC_QS=[
+  (h,m,ap)=>{const hd=h===0?12:h>12?h-12:h;const r=fmt12(h,m,ap);const w1=fmt12((h+1)%24,m,h+1>=12&&h<12?'PM':h+1>=24?'AM':ap);const w2=fmt12(h,m===0?55:(m-5+60)%60,ap);const w3=fmt12(h,m+5>55?0:m+5,ap);return{q:'What time does this clock show?',ans:r,wrong:[w1,w2,w3].filter(x=>x!==r).slice(0,3)}},
+  (h,m,ap)=>{const hd=h===0?12:h>12?h-12:h;return{q:`It is ${fmt12(h,m,ap)}. How many minutes until the next full hour?`,ans:`${60-m} min`,wrong:[`${m} min`,`${60-m+5} min`,`${Math.max(60-m-5,0)} min`].filter(x=>x!==`${60-m} min`)}},
+  (h,m,ap)=>{const hd=h===0?12:h>12?h-12:h;const mins=(hd-1)*60+m;return{q:`How many minutes past 12:00 is ${fmt12(h,m,ap)}?`,ans:`${mins} min`,wrong:[`${mins+15} min`,`${Math.max(mins-15,0)} min`,`${hd*60+m} min`].filter(x=>x!==`${mins} min`)}},
+  (h,m,ap)=>{return{q:`Is ${fmt12(h,m,ap)} in the morning (AM) or afternoon/evening (PM)?`,ans:ap,wrong:[ap==='AM'?'PM':'AM','Both','Neither']}},
 ];
-let curC=null, cUsed=[], clockCorrect=0;
-
-function fmt12(h,m,ap){
-  const hd=h===0?12:h>12?h-12:h;
-  return hd+':'+String(m).padStart(2,'0')+' '+ap;
-}
-function newChall(){
-  if(cUsed.length>=CHALLS.length)cUsed=[];
-  let i; do{i=Math.floor(Math.random()*CHALLS.length);}while(cUsed.includes(i));
-  cUsed.push(i); curC=CHALLS[i];
-  document.getElementById('ch-target').textContent=fmt12(curC.h,curC.m,curC.ap);
-  const r=document.getElementById('ch-result');
-  r.textContent=''; r.className='ch-result';
-}
-function checkChall(){
-  if(!curC)return;
-  let tH=curC.h;
-  if(curC.ap==='PM'&&curC.h!==12)tH=curC.h+12;
-  if(curC.ap==='AM'&&curC.h===12)tH=0;
-  const okAP=C.ap===curC.ap, okH=C.h===tH;
-  const md=Math.min(Math.abs(C.m-curC.m),60-Math.abs(C.m-curC.m));
-  const okM=md<=2;
-  const r=document.getElementById('ch-result');
-  if(okAP&&okH&&okM){
-    clockCorrect++;
-    document.getElementById('clock-score').textContent=clockCorrect;
-    r.textContent='✓ Correct! '+fmt12(curC.h,curC.m,curC.ap)+' — well done!';
-    r.className='ch-result ok';
-    setTimeout(newChall,1600);
-  } else {
-    let msg='Not quite. ';
-    if(!okAP) msg+='Check AM / PM first.';
-    else if(!okH) msg+='Move the short dark hand to the correct hour.';
-    else msg+='Move the long red hand to the correct minute.';
-    r.textContent=msg; r.className='ch-result no';
-  }
-}
-
-// ── Duration ─────────────────────────────────────────────────────────────────
-const DURS=[
-  {s:7*60+30,d:45,q:'School assembly starts at 7:30 AM and lasts 45 minutes.'},
-  {s:14*60+30,d:105,q:'A film starts at 2:30 PM and lasts 1 hour 45 minutes.'},
-  {s:16*60+15,d:90,q:'Cricket practice starts at 4:15 PM and lasts 1 hour 30 minutes.'},
-  {s:10*60+30,d:75,q:'A match starts at 10:30 AM and lasts 1 hour 15 minutes.'},
-  {s:15*60+45,d:60,q:'The bus journey starts at 3:45 PM and takes exactly 1 hour.'},
-  {s:8*60,d:30,q:'Morning yoga starts at 8:00 AM and lasts 30 minutes.'},
-];
-let curD=null;
-
-function fmtM(t){
-  t=((t%1440)+1440)%1440;
-  const h=Math.floor(t/60),m=t%60,ap=h>=12?'PM':'AM';
-  const hd=h===0?12:h>12?h-12:h;
-  return hd+':'+String(m).padStart(2,'0')+' '+ap;
-}
-function newDur(){
-  curD=DURS[Math.floor(Math.random()*DURS.length)];
-  document.getElementById('dur-q').textContent=curD.q+' What time does it end?';
-  const sl=document.getElementById('dur-sl');
-  sl.min=curD.s; sl.max=curD.s+180; sl.value=curD.s; sl.step=1;
-  document.getElementById('dur-out').textContent=fmtM(curD.s);
-  document.getElementById('tl-s-lbl').textContent=fmtM(curD.s);
-  document.getElementById('tl-e-lbl').textContent='?';
-  document.getElementById('tl-e').style.left='50%';
-  document.getElementById('tl-fill').style.width='4%';
-  document.getElementById('dur-res').textContent='';
-  document.getElementById('dur-res').className='dur-result';
-  sl.oninput=()=>{
-    const v=+sl.value, pct=4+((v-curD.s)/180)*88;
-    document.getElementById('dur-out').textContent=fmtM(v);
-    document.getElementById('tl-e').style.left=Math.min(92,pct)+'%';
-    document.getElementById('tl-fill').style.width=Math.min(92,pct)+'%';
-    document.getElementById('tl-e-lbl').textContent=fmtM(v);
-  };
-}
-function checkDur(){
-  if(!curD)return;
-  const v=+document.getElementById('dur-sl').value, ans=curD.s+curD.d;
-  const res=document.getElementById('dur-res');
-  if(Math.abs(v-ans)<=2){
-    res.textContent='✓ Correct! Ends at '+fmtM(ans)+'. Duration = '+curD.d+' min.';
-    res.className='dur-result ok';
-    document.getElementById('tl-e-lbl').textContent=fmtM(ans);
-    document.getElementById('tl-e').style.left='92%';
-    document.getElementById('tl-fill').style.width='92%';
-  } else {
-    const d=curD.d;
-    const ds=(Math.floor(d/60)?Math.floor(d/60)+'h ':'')+(d%60?(d%60)+'min':'');
-    res.textContent='✗ Not quite. Add '+ds.trim()+' to '+fmtM(curD.s)+' → '+fmtM(ans);
-    res.className='dur-result no';
-  }
-}
-
-// ── Practice ──────────────────────────────────────────────────────────────────
-const QS=[
-  {q:'How many seconds are in 3 minutes?',a:'180',o:['30','60','180','300'],e:'3 × 60 = 180 seconds'},
-  {q:'Train leaves 10:45 AM, arrives 1:15 PM. Journey time?',a:'2 h 30 min',o:['1 h 30 min','2 h 30 min','2 h 45 min','3 h'],e:'10:45 → 1:15 = 2 h 30 min'},
-  {q:'How many minutes in 2½ hours?',a:'150',o:['120','150','140','250'],e:'2 × 60 + 30 = 150 min'},
-  {q:'Film starts 7:20 PM, lasts 1 h 55 min. End time?',a:'9:15 PM',o:['8:55 PM','9:15 PM','9:25 PM','8:25 PM'],e:'7:20 PM + 1h 55min = 9:15 PM'},
-  {q:'How many hours in 3 days?',a:'72',o:['24','48','72','36'],e:'3 × 24 = 72 hours'},
-  {q:'Convert 135 minutes to hours and minutes.',a:'2 h 15 min',o:['1 h 35 min','2 h 15 min','2 h 35 min','1 h 15 min'],e:'135 ÷ 60 = 2 h 15 min'},
-  {q:'School 8:30 AM → 3:00 PM. How long?',a:'6 h 30 min',o:['5 h 30 min','6 h','6 h 30 min','7 h'],e:'8:30 AM → 3:00 PM = 6 h 30 min'},
-];
-let pqUsed=[], pqCorrect=0, pqTotal=0, pqStreak=0;
-
 function nextPQ(){
-  if(pqUsed.length>=QS.length)pqUsed=[];
-  let i; do{i=Math.floor(Math.random()*QS.length);}while(pqUsed.includes(i));
-  pqUsed.push(i);
-  const q=QS[i];
+  const hours=[1,2,3,4,5,6,7,8,9,10,11,12];const mins=[0,5,10,15,20,25,30,35,40,45,50,55];
+  pracH=hours[Math.floor(Math.random()*hours.length)];pracM=mins[Math.floor(Math.random()*mins.length)];
+  pracAP=Math.random()>.5?'AM':'PM';const H24=pracAP==='AM'?pracH%12:pracH%12+12;
+  drawPracClock(H24,pracM);document.getElementById('prac-time-disp').textContent=fmt12(H24,pracM,pracAP);
+  const qgen=PRAC_QS[Math.floor(Math.random()*PRAC_QS.length)];const q=qgen(H24,pracM,pracAP);
   document.getElementById('pq-text').textContent=q.q;
-  const fb=document.getElementById('pq-fb'); fb.textContent=''; fb.className='pq-fb';
-  const el=document.getElementById('pq-opts'); el.innerHTML='';
-  [...q.o].sort(()=>Math.random()-.5).forEach(o=>{
-    const b=document.createElement('button');
-    b.className='ans-opt'; b.textContent=o;
-    b.onclick=()=>{
-      el.querySelectorAll('.ans-opt').forEach(x=>x.onclick=null);
-      const ok=o===q.a; pqTotal++;
-      b.classList.add(ok?'correct':'wrong');
-      if(!ok)el.querySelectorAll('.ans-opt').forEach(x=>{if(x.textContent===q.a)x.classList.add('correct')});
-      fb.textContent=(ok?'✓ Correct! ':'✗ Not quite. ')+q.e;
-      fb.className='pq-fb '+(ok?'ok':'no');
-      if(ok){pqCorrect++;pqStreak++;}else{pqStreak=0;}
-      updateScore();
-    };
-    el.appendChild(b);
+  document.getElementById('pq-fb').textContent='';document.getElementById('pq-fb').className='pq-fb';
+  const opts=document.getElementById('pq-opts');opts.innerHTML='';
+  const pool=[q.ans,...(q.wrong||[])].filter((v,i,a)=>a.indexOf(v)===i).slice(0,4).sort(()=>Math.random()-.5);
+  pool.forEach(o=>{const b=document.createElement('button');b.className='ans-opt';b.textContent=o;
+    b.onclick=()=>{opts.querySelectorAll('.ans-opt').forEach(x=>x.onclick=null);const ok=o===q.ans;b.classList.add(ok?'correct':'wrong');if(!ok)opts.querySelectorAll('.ans-opt').forEach(x=>{if(x.textContent===q.ans)x.classList.add('correct')});const fb=document.getElementById('pq-fb');fb.textContent=(ok?'✓ Correct!':'✗ Not quite. The answer is '+q.ans+'.');fb.className='pq-fb '+(ok?'ok':'no')};
+    opts.appendChild(b);
   });
 }
-
-function updateScore(){
-  document.getElementById('psc-correct').textContent=pqCorrect;
-  const pct=pqTotal>0?Math.round(pqCorrect/pqTotal*100):0;
-  document.getElementById('psc-bar').style.width=pct+'%';
-  const streak=document.getElementById('psc-streak');
-  if(pqStreak>=3) streak.innerHTML=`🔥 <strong>${pqStreak} in a row!</strong> Keep going!`;
-  else if(pqStreak===0&&pqTotal>0) streak.innerHTML=`${pqCorrect} / ${pqTotal} correct (${pct}%)`;
-  else streak.innerHTML=`${pqCorrect} / ${pqTotal} correct`;
-}
-
-// ── Tab switch ────────────────────────────────────────────────────────────────
 function switchTab(t){
-  ['clock','duration','practice'].forEach(x=>
-    document.getElementById('pnl-'+x).classList.toggle('on',x===t));
-  document.querySelectorAll('.tab').forEach((b,i)=>
-    b.classList.toggle('on',['clock','duration','practice'][i]===t));
-  if(t==='practice')nextPQ();
-  if(t==='duration')newDur();
+  ['clock','practice'].forEach(x=>document.getElementById('pnl-'+x).classList.toggle('on',x===t));
+  document.querySelectorAll('.tab').forEach((b,i)=>b.classList.toggle('on',['clock','practice'][i]===t));
+  if(t==='practice'){nextPQ()}
+  if(t==='clock')setTimeout(clockResize,50);
 }
-
-// ── Init ──────────────────────────────────────────────────────────────────────
 (function init(){
-  if(typeof ResizeObserver!=='undefined'){
-    let ready=false;
-    const ro=new ResizeObserver(()=>{
-      clockResize();
-      if(!ready){ready=true;newChall();newDur();nextPQ();}
-    });
-    ro.observe(cvs);
-  } else {
-    setTimeout(()=>{clockResize();newChall();newDur();nextPQ();},80);
-  }
+  if(typeof ResizeObserver!=='undefined'){let ready=false;const ro=new ResizeObserver(()=>{clockResize();if(!ready){ready=true;newChall();nextPQ()}});ro.observe(cvs)}
+  else{setTimeout(()=>{clockResize();newChall();nextPQ()},80)}
   window.addEventListener('resize',clockResize);
 })();
 </script>
